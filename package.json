@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run build:dev && npm run serve:dev",
+    "create": "mysql -u root < schema.sql",
+    "build:dev": "webpack --config webpack.config.js -w",
+    "build": "webpack --config webpack.config.js",
+    "serve:dev": "nodemon server.js",
+    "serve": "node server.js",
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
