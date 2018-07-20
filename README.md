@@ -19,7 +19,7 @@
         - Stars * Z _click: link to Review page_
         - X out of Y stars ** _hover: dropdown modal_
           - _dropdown modal_
-            - Amazon calculates a product’s star ratings using a machine learned model instead of a raw data average. The machine learned model takes into account factors including: the age of a review, helpfulness votes by customers and whether the reviews are from verified purchases.
+            - Info
         - 5 star *progress bar* X% ***
         - 4 star *progress bar* X% ***
         - 3 star *progress bar* X% ***
