@@ -9,4 +9,4 @@ const Service = () => {
   );
 }
 
-ReactDOM.render(<Service />, document.getElementById('service));
+ReactDOM.render(<Service />, document.getElementById('service'));
