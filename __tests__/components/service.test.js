@@ -1,11 +1,7 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Service from '../../src/index';
+import Service from '../../src/service';
 // import sinon from 'sinon';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Service', () => {
   it('should be able to run tests', () => {

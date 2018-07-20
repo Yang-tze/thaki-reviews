@@ -1,12 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const Service = () => {
-  return (
-    <div>
-      Service Component
-    </div>
-  );
-}
+import Service from './service.jsx';
 
 ReactDOM.render(<Service />, document.getElementById('service'));

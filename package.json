@@ -2,7 +2,7 @@
   "name": "review-module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.jsx",
+  "main": "src/index.jsx",
   "scripts": {
     "dev": "npm run build:dev && npm run serve:dev",
     "create": "mysql -u root < schema.sql",
@@ -10,7 +10,7 @@
     "build": "webpack --config webpack.config.js",
     "serve:dev": "nodemon server.js",
     "serve": "node server.js",
-    "test": "jest --coverage"
+    "test": "jest --config=config.jest.js --coverage"
   },
   "repository": {
     "type": "git",
