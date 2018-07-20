@@ -24,8 +24,8 @@
         - Write a customer review (button link to Your Reviews page)
     - Top customer reviews
       - Review
-    - See all Z reviews (link to review page)
-    - Component 2AaiiII
+    - See all Z reviews (link to review page) // from Reviews Summary
+    - Write a customer review (button link to Your Reviews page) // from Customer Reviews -> Left Panel -> Dashboard -> Add Review
   - Right Panel
     - Customer Images
     - Most recent customer reviews
