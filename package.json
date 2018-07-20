@@ -27,16 +27,20 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "morgan": "^1.9.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-test-renderer": "^16.4.1",
+    "styled-components": "^3.3.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.0",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.4.1",
+    "jest-cli": "^23.4.1",
     "jest-enzyme": "^6.0.2",
     "nodemon": "^1.18.3",
     "puppeteer": "^1.6.0",
