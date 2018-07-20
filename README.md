@@ -1,7 +1,7 @@
 # UX Components
 
 ## Reviews Summary
-  - * Stars _hover: dropdown modal_
+  - Stars _hover: dropdown modal_
     - _dropdown modal_
       - ** X out of Y stars
       - *** 5 star *progress bar* X% _click: link to 5-star reviews_
@@ -16,7 +16,7 @@
   - _left panel_
     - _dashboard_
       - _aggregates_
-        - * Stars Z _click: link to Review page_
+        - Stars Z _click: link to Review page_
         - ** X out of Y stars _hover: dropdown modal_
           - _dropdown modal_
             - Info
@@ -48,7 +48,7 @@
       - ****** ProfilePic Username _click: link to Profile page_
       - ******* Stars Title _click: link to Customer Review page_
       - ******** Review
-      - Published _relative time_ ago _green if <24hrs_
+      - Published Y ago _relative time: green if <24hrs_
     - Search customer reviews
       - Search Bar Search _button: link to Customer Reviews Search page_
     
