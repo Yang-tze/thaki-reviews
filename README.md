@@ -1,8 +1,6 @@
-# review-module
+# UX Components w/in Service
 
-# UX Components w/in Service:
-
-1. Reviews Summary
+## Reviews Summary
   - Stars
     - Dropdown
       - X out of Y stars
@@ -14,7 +12,7 @@
       - See all Z reviews (link to review page)
   - X customer reviews (link to reviews component)
 
-2. Customer Reviews
+## Customer Reviews
   - Left Panel
     - Dashboard
       - Summary
