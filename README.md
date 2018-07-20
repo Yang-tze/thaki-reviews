@@ -1,33 +1,54 @@
 # UX Components w/in Service
 
 ## Reviews Summary
-  - Stars
-    - Dropdown
-      - X out of Y stars
-      - 5 star *progress bar* X%
-      - 4 star *progress bar* X%
-      - 3 star *progress bar* X%
-      - 4 star *progress bar* X%
-      - 5 star *progress bar* X%
-      - See all Z reviews (link to review page)
-  - X customer reviews (link to reviews component)
+  - Stars * _hover: dropdown modal_
+    - _dropdown modal_
+      - X out of Y stars **
+      - 5 star *progress bar* X% _link to 5-star reviews_ ***
+      - 4 star *progress bar* X% _link to 4-star reviews_ ***
+      - 3 star *progress bar* X% _link to 3-star reviews_ ***
+      - 4 star *progress bar* X% _link to 2-star reviews_ ***
+      - 5 star *progress bar* X% _link to 5-star reviews_ ***
+      - See all Z reviews _click: link to Reviews page_ ****
+  - X customer reviews _click: scroll to reviews component_
 
 ## Customer Reviews
-  - Left Panel
-    - Dashboard
-      - Summary
-        - Stars Z (link to review page; info dropdown)
-          - Info Dropdown
-        - Component 1a
-      - Add Review
-        - Share your thoughts with other customers
-        - Write a customer review (button link to Your Reviews page)
+  - _left panel_
+    - _dashboard_
+      - _aggregates_
+        - Stars * Z _click: link to Review page_
+        - X out of Y stars ** _hover: dropdown modal_
+          - _dropdown modal_
+            - Amazon calculates a product’s star ratings using a machine learned model instead of a raw data average. The machine learned model takes into account factors including: the age of a review, helpfulness votes by customers and whether the reviews are from verified purchases.
+        - 5 star *progress bar* X% ***
+        - 4 star *progress bar* X% ***
+        - 3 star *progress bar* X% ***
+        - 4 star *progress bar* X% ***
+        - 5 star *progress bar* X% ***
+        - See all Z reviews _link to Reviews page_ ****
+      - _right panel_
+        - Share your thoughts with other customers.
+        - Write a customer review _button: link to Your Reviews page_ *****
     - Top customer reviews
       - Review
-    - See all Z reviews (link to review page) // from Reviews Summary
-    - Write a customer review (button link to Your Reviews page) // from Customer Reviews -> Left Panel -> Dashboard -> Add Review
-  - Right Panel
-    - Customer Images
+        - ProfilePic Username _click: link to Profile page_
+        - Stars Title _click: link to Customer Review page_
+        - Date
+        - Options | Verified? _click: link to Customer Reviews Search page w/ like options_
+        - Review
+        - # people found this helpful
+        - Helpful _button_ Not Helpful _button_ Comment _click: link to Customer Review page_ Report Abuse _link_
+    - See all Z reviews _click: link to Reviews page_ ****
+    - Write a customer review _button: link to Your Reviews page_ *****
+  - _right panel_
+    - Customer images
+      - _thumbnails_ _click: pop-up image modal_
+      - See all customer images  _click: pop-up photo gallery modal_
     - Most recent customer reviews
+      - ProfilePic Username _click: link to Profile page_
+      - Stars Title _click: link to Customer Review page_
+      - Review
+      - Published _relative time_ ago _green if <24hrs_
     - Search customer reviews
+      - Search Bar Search _button: link to Customer Reviews Search page_
     
