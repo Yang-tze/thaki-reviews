@@ -1,35 +1,35 @@
 # review-module
 
-Review Components w/in Service:
+# UX Components w/in Service:
 
-1) Reviews Summary
-  A) Stars
-    a) Dropdown
-      i) X out of Y stars
-      ii) 5 star *progress bar* X%
-      iii) 4 star *progress bar* X%
-      iv) 3 star *progress bar* X%
-      v) 4 star *progress bar* X%
-      vi) 5 star *progress bar* X%
-      vii) See all Z reviews (link to review page)
-  B) X customer reviews (link to reviews component)
+1. Reviews Summary
+  - Stars
+    - Dropdown
+      - X out of Y stars
+      - 5 star *progress bar* X%
+      - 4 star *progress bar* X%
+      - 3 star *progress bar* X%
+      - 4 star *progress bar* X%
+      - 5 star *progress bar* X%
+      - See all Z reviews (link to review page)
+  - X customer reviews (link to reviews component)
 
-2) Customer Reviews
-  A) Left Panel
-    a) Dashboard
-      i) Summary
-        I) Stars Z (link to review page; info dropdown)
-          .) Info Dropdown
-        II) Component 1a
-      ii) Add Review
-        I) Share your thoughts with other customers
-        II) Write a customer review (button link to Your Reviews page)
-    b) Top customer reviews
-      i) Review
-    c) See all Z reviews (link to review page)
-    d) Component 2AaiiII
-  B) Right Panel
-    a) Customer Images
-    b) Most recent customer reviews
-    c) Search customer reviews
+2. Customer Reviews
+  - Left Panel
+    - Dashboard
+      - Summary
+        - Stars Z (link to review page; info dropdown)
+          - Info Dropdown
+        - Component 1a
+      - Add Review
+        - Share your thoughts with other customers
+        - Write a customer review (button link to Your Reviews page)
+    - Top customer reviews
+      - Review
+    - See all Z reviews (link to review page)
+    - Component 2AaiiII
+  - Right Panel
+    - Customer Images
+    - Most recent customer reviews
+    - Search customer reviews
     
