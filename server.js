@@ -17,6 +17,8 @@ const port = process.env.PORT || 3004;
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+app.use(express.static('public'));
+
 const app.get('/reviewsummary', function (req, res) {
   const product = req.body;
   // Output: {
