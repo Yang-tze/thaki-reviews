@@ -1,3 +1,7 @@
+const products = Array.apply(null, Array(100)).map((x, i) => {
+  return i + 1;
+});
+
 const hipsum = [];
 hipsum.push('Lorem ipsum dolor amet wayfarers tbh echo park, occaecat cupidatat migas poutine humblebrag gochujang schlitz artisan hashtag eiusmod celiac vexillologist. Pinterest vinyl tacos snackwave franzen. Vegan vice humblebrag, commodo ut yuccie polaroid meditation cardigan. Dolore venmo sed nisi dolor, keffiyeh elit occaecat cardigan asymmetrical. Irure keffiyeh thundercats commodo hoodie lyft. Next level beard voluptate pug.');
 hipsum.push('Austin keffiyeh aliqua cupidatat duis direct trade kogi godard veniam lorem taiyaki. Consectetur fanny pack deep v etsy banjo reprehenderit hell of. Freegan bespoke nulla taxidermy, culpa nostrud echo park master cleanse small batch. Hexagon ut four loko direct trade.');
@@ -61,6 +65,7 @@ productPics.push('');
 productPics.push('');
 
 export default {
+  products,
   hipsum,
   profilePics,
   productPics,

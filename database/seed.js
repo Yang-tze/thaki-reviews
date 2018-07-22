@@ -2,14 +2,11 @@ import fs from ('fs');
 
 import { db } from './connection.js';
 import {
+  products,
   hipsum,
   profilePics,
   productPics,
 } from './loadAssets.js';
-
-const products = Array.apply(null, Array(100)).map((x, i) => {
-  return i + 1;
-});
 
 const inclusiveRandom = (min, max) => {
   min = Math.ceil(min);
@@ -28,7 +25,7 @@ const findUser = () => {
 const createUser = () => {
   let user = {};
   let startingIndex = inclusiveRandom(0, 100);
-  user.username = inclusiveRandom(0, 14).slice(startingIndex, inclusiveRandom(startingIndex + 5, startingIndex + 100));
+  user.username = hipsum[inclusiveRandom(0, 14)].slice(startingIndex, inclusiveRandom(startingIndex + 5, startingIndex + 100));
   if (inclusiveRandom(1, 3) === 3) {
     user.img = profilePics[inclusiveRandom(0,25)];
   }
