@@ -14,10 +14,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react','env'],
-          },
-        },
-      },
-    ],
-  },
+            presets: ['env','react']
+          }
+        }
+      }
+    ]
+  }
 };

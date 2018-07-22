@@ -2,7 +2,7 @@
   "name": "review-module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.jsx",
+  "main": "src/index.jsx",
   "scripts": {
     "create": "mysql -u root < database/schema.sql",
     "build:dev": "webpack --config webpack.config.js -w",
@@ -10,7 +10,7 @@
     "dev": "npm run build:dev && npm run serve:dev",
     "build": "webpack --config webpack.config.js",
     "serve": "node server.js",
-    "test": "jest --coverage"
+    "test": "jest --config=config.jest.js --coverage"
   },
   "repository": {
     "type": "git",
@@ -28,11 +28,14 @@
     "express": "^4.16.3",
     "morgan": "^1.9.0",
     "path": "^0.12.7",
+    "react-test-renderer": "^16.4.1",
+    "styled-components": "^3.3.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.0",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
@@ -44,6 +47,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
     "jest": "^23.4.1",
+    "jest-cli": "^23.4.1",
     "jest-enzyme": "^6.0.2",
     "nodemon": "^1.18.3",
     "puppeteer": "^1.6.0",
