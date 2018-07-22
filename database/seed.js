@@ -5,17 +5,25 @@ import {
 } from './loadAssets.js';
 
 import {
+  generateAggregate,
   inclusiveRandom,
   assignUser,
   generateTitle,
   generateReview,
   addImages,
-  addComments,
+  updateAggregates,
 } from './seedHelpers.js';
 
-const updateAggregates = (product, review) => {
-// write record @ product id, filtering & averaging reviews by product id
+const stream = fs.createWriteStream('seed.sql');
+products.forEach((product) => {
+  stream.write(`${generateAggregate(product)}\n`);
 };
+products.forEach((product) => {
+  randomArray(20).forEach((review) => {
+    stream.write(`${generateReview(product)}\n`);
+  });
+};
+stream.end();
 
 const createReview = (product) => {
   let review = {};
@@ -29,17 +37,22 @@ const createReview = (product) => {
   inclusiveRandom(1,3) === 3 ? review.helpful = inclusiveRandom(1,15) : review.helpful = 0;
   inclusiveRandom(1,3) === 3 ? review.helpful = inclusiveRandom(1,15) : review.helpful = 0;
   review.abuse = 0;
-  if (inclusiveRandom(1, 10) === 7) {
-    addImages(review);
-  }
-  if (inclusiveRandom(1, 10) === 7) {
-    addComments(review);
-  }
-  updateAggregates(product, review);
-};
+  review.images = [];
 
-const addReview = (review) => {
-// write to csv
+  if (inclusiveRandom(1, 10) === 7) {
+    Array.apply(null, Array(inclusiveRandom(0,5))).map((x, i) => {
+      return i;
+    }).forEach((image) => {
+      review.images.push(addImage());
+    });
+  }
+
+/* if (inclusiveRandom(1, 10) === 7) {
+**   addComments(review);
+** } TODO: add comments/reply data */
+
+updateAggregates(product, review);
+  return review;
 };
 
 products.forEach((product) => addReview(createReview(product)));
@@ -47,42 +60,3 @@ products.forEach((product) => addReview(createReview(product)));
 // INSERT INTO reviews (user_id, product_id, rating, title, options, verified, review, 0, 0, 0)
 // UPDATE aggregates;
 // INSERT INTO images ()
-
-//   CREATE TABLE aggregates (
-//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-//   product_id INT NOT NULL,
-//   score INT(9),
-//   qty INT(9)
-//   );
-  
-//   CREATE TABLE images (
-//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-//   review_id INT NOT NULL,
-//   title VARCHAR(250),
-//   url VARCHAR(250),
-//   FOREIGN KEY (review_id) REFERENCES reviews(id)
-//   );
-  
-//   CREATE TABLE comments (
-//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-//   review_id INT NOT NULL,
-//   user_id INT NOT NULL,
-//   date DATETIME DEFAULT CURRENT_TIMESTAMP,
-//   title VARCHAR(250),
-//   comment VARCHAR(65000),
-//   abuse INT(9),
-//   FOREIGN KEY (review_id) REFERENCES reviews(id),
-//   FOREIGN KEY (user_id) REFERENCES users(id)
-//   );
-  
-//   CREATE TABLE replies (
-//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-//   comment_id INT NOT NULL,
-//   user_id INT NOT NULL,
-//   date DATETIME DEFAULT CURRENT_TIMESTAMP,
-//   reply VARCHAR(65000),
-//   abuse INT(9),
-//   FOREIGN KEY (comment_id) REFERENCES comments(id),
-//   FOREIGN KEY (user_id) REFERENCES users(id)
-//   );
-  

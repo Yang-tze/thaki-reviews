@@ -5,10 +5,18 @@ import {
   productPics,
 } from './loadAssets.js';
 
+const generateAggregate = (product) => {
+  return `INSERT INTO aggregates (product_id, score, qty) VALUES("${product}", 0, 0);`;
+};
+
 const inclusiveRandom = (min, max) => {
   const minR = Math.ceil(min);
   const maxR = Math.floor(max);
   return Math.floor(Math.random() * (maxR - minR + 1)) + minR;
+};
+
+const randomArray = (length) => {
+  Array.apply(null, Array(inclusiveRandom(0,length))).map((x, i) => i);
 };
 
 const insertUser = (user) => {
@@ -69,20 +77,51 @@ const generateReview = () => {
   return review.slice(0, review.length - 3);
 };
 
-const addImages = (review) => {
-  // conditionally add images
+//   CREATE TABLE images (
+//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+//   review_id INT NOT NULL,
+//   title VARCHAR(250),
+//   url VARCHAR(250),
+//   FOREIGN KEY (review_id) REFERENCES reviews(id)
+//   );
+
+const getReviewId = () => {
+  db.query('SELECT id FROM reviews ORDER BY DATE DESC;', (err, data) => {
+    if (err) throw err;  
+    console.log('The review id is: ', data);
+    return data;
+  });
 };
 
-const addComments = (review) => {
-  assignUser();
-  // generate replies conditionally
+const addImage = () => {
+  const img = {};
+  img.review = getReviewId();
+  img.title = generateTitle();
+  img.url = productPics[inclusiveRandom(0, productPics.length - 1)];
+  return img;
+};
+
+/* const addComments = (review) => {
+**  assignUser();
+** }; TODO: generate comments/replies */
+
+const updateAggregate = (product, review) => {
+  //   CREATE TABLE aggregates (
+//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+//   product_id INT NOT NULL,
+//   score INT(9),
+//   qty INT(9)
+//   );
+  // write record @ product id, filtering & averaging reviews by product id
 };
 
 export default {
+  generateAggregate,
   inclusiveRandom,
+  randomArray,
   assignUser,
   generateTitle,
   generateReview,
-  addImages,
-  addComments,
+  addImage,
+  updateAggregates,
 };
