@@ -7,7 +7,6 @@ USE reviews;
 CREATE TABLE users (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 username VARCHAR(45),
-url VARCHAR(250),
 img VARCHAR(250)
 );
 
