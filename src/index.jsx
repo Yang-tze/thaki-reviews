@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Service = () => {
-  return (
-    <div>
-      Service Component
-    </div>
-  );
-}
+const Service = () => (
+  <div>
+    Service Component
+  </div>
+);
 
-ReactDOM.render(<Service />, document.getElementById('service));
+ReactDOM.render(<Service />, document.getElementById('service'));
