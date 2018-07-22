@@ -1,3 +1,5 @@
+import fs from ('fs');
+
 import { db } from './connection.js';
 
 let hipsum = [];
@@ -70,16 +72,17 @@ const findUser = () => {
 }
 
 const createUser = () => {
+  let user = {};
   let startingIndex = inclusiveRandom(0, 100);
-  let username = inclusiveRandom(0, 14).slice(startingIndex, inclusiveRandom(startingIndex + 5, startingIndex + 100));
+  user.username = inclusiveRandom(0, 14).slice(startingIndex, inclusiveRandom(startingIndex + 5, startingIndex + 100));
   if (inclusiveRandom(1, 3) === 3) {
-    let img = 
+    user.img = profilePics[inclusiveRandom(0,14)];
   }
-  db.query('INSERT INTO users (username, img) VALUES("' + username + '", ); SELECT id FROM USERS WHERE username="' + username + '";', (err, data) => {
-    if (err) createUser();  
+  db.query('INSERT INTO users (username, img) VALUES("' + user.username + '", "' + user.img + '"); SELECT id FROM USERS WHERE username="' + user.username + '";', (err, data) => {
+    if (err) return createUser();
     console.log('The user is: ', data);
+    return data;
   });
-  return ()
 }
 
 const assignUser = () => {
