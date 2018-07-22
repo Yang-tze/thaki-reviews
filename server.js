@@ -7,6 +7,8 @@ import {
   reportComment,
 } from '../database/helpers';
 
+import {db} from '../database/connection';
+
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
