@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "dev": "npm run build:dev && npm run serve:dev",
     "create": "mysql -u root < database/schema.sql",
     "build:dev": "webpack --config webpack.config.js -w",
-    "build": "webpack --config webpack.config.js",
     "serve:dev": "nodemon server.js",
+    "dev": "npm run build:dev && npm run serve:dev",
+    "build": "webpack --config webpack.config.js",
     "serve": "node server.js",
     "test": "jest --coverage"
   },
