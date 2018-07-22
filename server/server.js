@@ -7,7 +7,7 @@ import {
   reportComment,
 } from '../database/helpers';
 
-import {db} from '../database/connection';
+import { db } from '../database/connection';
 
 const express = require('express');
 const morgan = require('morgan');
@@ -21,7 +21,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static('public'));
 
-const app.get('/reviewsummary', function (req, res) {
+app.get('/reviewsummary', (req, res) => {
   const product = req.body;
   // Output: {
   // score: INT(9),
@@ -30,7 +30,7 @@ const app.get('/reviewsummary', function (req, res) {
   res.send();
 });
 
-app.get('/reviews', function (req, res) {
+app.get('/reviews', (req, res) => {
   const product = req.body;
   // Output:
   // [{
@@ -57,7 +57,7 @@ app.get('/reviews', function (req, res) {
   res.send();
 });
 
-app.get('/comments', function (req, res) {
+app.get('/comments', (req, res) => {
   const review = req.body;
   // Output:
   // [{
@@ -75,7 +75,7 @@ app.get('/comments', function (req, res) {
   res.send();
 });
 
-app.post('/addreview', function (req, res) {
+app.post('/addreview', (req, res) => {
   // Input:
   // {
   // review: {
@@ -97,7 +97,7 @@ app.post('/addreview', function (req, res) {
   res.send();
 });
 
-app.post('/addcomment', function (req, res) {
+app.post('/addcomment', (req, res) => {
   // Input:
   // {
   // review_id: INT(9),
@@ -111,7 +111,7 @@ app.post('/addcomment', function (req, res) {
   res.send();
 });
 
-app.post('/reviewfeedback', function (req, res) {
+app.post('/reviewfeedback', (req, res) => {
   // Input:
   // {
   // review_id: INT(9),
@@ -124,7 +124,7 @@ app.post('/reviewfeedback', function (req, res) {
   res.send();
 });
 
-app.post('/reportcomment', function (req, res) {
+app.post('/reportcomment', (req, res) => {
   // Input:
   // {
   // review_id: INT(9),
@@ -137,4 +137,4 @@ app.post('/reportcomment', function (req, res) {
   res.send();
 });
 
-app.listen(port, () => console.log('Listening on port + ' port + '!'));
+app.listen(port, () => console.log('Listening on port:', port));
