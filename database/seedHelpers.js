@@ -1,13 +1,9 @@
-import { db } from './connection.js';
+import { db } from './connection';
 import {
   hipsum,
   profilePics,
   productPics,
-} from './loadAssets.js';
-
-const generateAggregate = (product) => {
-  return `INSERT INTO aggregates (product_id, score, qty) VALUES("${product}", 0, 0);`;
-};
+} from './loadAssets';
 
 const inclusiveRandom = (min, max) => {
   const minR = Math.ceil(min);
@@ -15,9 +11,19 @@ const inclusiveRandom = (min, max) => {
   return Math.floor(Math.random() * (maxR - minR + 1)) + minR;
 };
 
-const randomArray = (length) => {
-  Array.apply(null, Array(inclusiveRandom(0,length))).map((x, i) => i);
+const randomArray = (min, max) => {
+  Array.apply(null, Array(inclusiveRandom(min, max))).map((x, i) => i);
 };
+
+const thirdOdds = () => inclusiveRandom(1, 3) === 3;
+
+const seventhOdds = () => inclusiveRandom(1, 7) === 3;
+
+const randomHipsum = () => hipsum[inclusiveRandom(0, 14)];
+
+const randomProfilePic = () => profilePics[inclusiveRandom(0, 25)];
+
+const randomProductPic = productPics[inclusiveRandom(0, productPics.length - 1)];
 
 const insertUser = (user) => {
   db.query(`INSERT INTO users (username, img) VALUES("${user.username}", "${user.img}"); SELECT id FROM USERS WHERE username="${user.username}";`, (err, data) => {
@@ -30,9 +36,9 @@ const insertUser = (user) => {
 const createUser = () => {
   const user = {};
   const startIndex = inclusiveRandom(0, 100);
-  user.username = hipsum[inclusiveRandom(0, 14)].slice(startIndex).split(' ')[0];
-  if (inclusiveRandom(1, 3) === 3) {
-    user.img = profilePics[inclusiveRandom(0,25)];
+  user.username = randomHipsum.slice(startIndex).split(' ')[0];
+  if (thirdOdds) {
+    user.img = randomProfilePic;
   }
   db.query(`SELECT id FROM users WHERE username="${user.username}";`, (err, data) => {
     if (err) insertUser(user);
@@ -50,40 +56,32 @@ const findUser = () => {
 };
 
 const assignUser = () => {
-  if (inclusiveRandom(1, 3) === 3) {
+  if (thirdOdds) {
     return findUser();
-  }    
+  }
   return createUser();
 };
 
 const generateTitle = () => {
   const startIndex = inclusiveRandom(0, 100);
   const endIndex = inclusiveRandom(startIndex + 5, startIndex + 100);
-  return hipsum[inclusiveRandom(0, 14)].slice(startIndex, endIndex);
+  return randomHipsum.slice(startIndex, endIndex);
 };
 
 const generateReview = () => {
   let review = '';
-  // const length = inclusiveRandom(1, 5);
-  hipsum.forEach((paragraph) => {
-    if (inclusiveRandom(1, 7) === 3) {
-      review = `${review} ${paragraph} \n`;
-      // const sentences = paragraph.split('.');
-      // sentences.forEach((sentence) => {
-      //   inclusiveRandom(1, 5) === 3 ? review.push(sentence);
-      // })
-    }
+  randomArray(1, 7).forEach((paragraph) => {
+    review = `${review} ${paragraph} \n`;
   });
   return review.slice(0, review.length - 3);
+  // TODO: finish less sophisticated algorithm
+  // const length = inclusiveRandom(1, 5);
+  // hipsum.forEach((paragraph) => {
+  // if (inclusiveRandom(1, 7) === 3) {
+  // const sentences = paragraph.split('.');
+  // sentences.forEach((sentence) => {
+  // inclusiveRandom(1, 5) === 3 ? review.push(sentence);
 };
-
-//   CREATE TABLE images (
-//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-//   review_id INT NOT NULL,
-//   title VARCHAR(250),
-//   url VARCHAR(250),
-//   FOREIGN KEY (review_id) REFERENCES reviews(id)
-//   );
 
 const getReviewId = () => {
   db.query('SELECT id FROM reviews ORDER BY DATE DESC;', (err, data) => {
@@ -97,7 +95,7 @@ const addImage = () => {
   const img = {};
   img.review = getReviewId();
   img.title = generateTitle();
-  img.url = productPics[inclusiveRandom(0, productPics.length - 1)];
+  img.url = randomProductPic;
   return img;
 };
 
@@ -115,13 +113,26 @@ const updateAggregate = (product, review) => {
   // write record @ product id, filtering & averaging reviews by product id
 };
 
+const generateAggregate = (product) => {
+  db.query(`SELECT rating FROM reviews WHERE product_id=${product};`, (err, data) => {
+    if (err) throw err;  
+    console.log('The review id is: ', data);
+    const aggregates = {};
+    let total = 0;
+    data.forEach((rating) => total += rating);
+    aggregates.score = total / data.length;
+    aggregates.qty = data.length;
+    db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`;
+  });
+};
+
 export default {
-  generateAggregate,
   inclusiveRandom,
   randomArray,
+  thirdOdds,
   assignUser,
   generateTitle,
   generateReview,
   addImage,
-  updateAggregates,
+  generateAggregate,
 };
