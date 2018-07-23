@@ -1,9 +1,11 @@
-import { db } from './connection';
+import Promise from 'bluebird';
+
+import { db } from './connection.js';
 import {
   hipsum,
   profilePics,
   productPics,
-} from './loadAssets';
+} from './loadAssets.js';
 
 const inclusiveRandom = (min, max) => {
   const minR = Math.ceil(min);
@@ -12,7 +14,7 @@ const inclusiveRandom = (min, max) => {
 };
 
 const randomArray = (min, max) => {
-  Array.apply(null, Array(inclusiveRandom(min, max))).map((x, i) => i);
+  return Array.apply(null, Array(inclusiveRandom(min, max))).map((x, i) => i);
 };
 
 const thirdOdds = () => inclusiveRandom(1, 3) === 3;
@@ -23,55 +25,93 @@ const randomHipsum = () => hipsum[inclusiveRandom(0, 14)];
 
 const randomProfilePic = () => profilePics[inclusiveRandom(0, 25)];
 
-const randomProductPic = productPics[inclusiveRandom(0, productPics.length - 1)];
+const randomProductPic = () => productPics[inclusiveRandom(0, productPics.length - 1)];
+
+const generateUsername = () => {
+  const startIndex = inclusiveRandom(0, 100);
+  return randomHipsum().slice(startIndex).split(' ')[0];
+};
 
 const insertUser = (user) => {
-  db.query(`INSERT INTO users (username, img) VALUES("${user.username}", "${user.img}"); SELECT id FROM USERS WHERE username="${user.username}";`, (err, data) => {
-    if (err) throw err;
-    console.log('The user is: ', data);
-    return data;
-  });
+  return new Promise((resolve, reject) => {
+    const queryString = `INSERT INTO users (username, img) VALUES("${user.username}", "${user.img}");`;
+    console.log('insert', queryString);
+    db.query(queryString, (err, data) => {
+      if (err) {
+        console.log('error inserting user', err);
+        throw err;
+      }
+      console.log('The insertUser user is: ', data.insertId);
+      resolve(data.insertId);
+    });
+  });  
 };
 
 const createUser = () => {
-  const user = {};
-  const startIndex = inclusiveRandom(0, 100);
-  user.username = randomHipsum.slice(startIndex).split(' ')[0];
-  if (thirdOdds) {
-    user.img = randomProfilePic;
-  }
-  db.query(`SELECT id FROM users WHERE username="${user.username}";`, (err, data) => {
-    if (err) insertUser(user);
-    console.log('The user is: ', data);
-    return data;
+  return new Promise((resolve, reject) => {
+    const user = {};
+    user.username = '';
+    while (user.username.length < 2) {
+      user.username = generateUsername();
+    }
+    if (thirdOdds) {
+      user.img = randomProfilePic();
+    }
+    let queryString = `SELECT id FROM users WHERE username="${user.username}";`;
+    console.log('createUser', queryString);
+    db.query(queryString, (err, data) => {
+      if (err) {
+        console.log('inserting', err);
+        insertUser(user);
+      }
+      console.log('The createUser user is:', data);
+      if (data.length < 1) {
+        resolve(insertUser(user));
+      } else {
+        resolve(data);
+      }
+    });
   });
 };
 
 const findUser = () => {
-  db.query('SELECT id FROM users ORDER BY RAND() LIMIT 1;', (err, data) => {
-    if (err) createUser();  
-    console.log('The user is: ', data);
-    return data;
+  return new Promise((resolve, reject) => {
+    const queryString = 'SELECT id FROM users ORDER BY RAND() LIMIT 1;';
+    console.log('findUser', queryString);
+    db.query(queryString, (err, data) => {
+      if (err) {
+        createUser();
+        console.log('error creating user');
+      }
+      let result = '';
+      if (data) {
+        result = data[0].id;
+      } else {
+        result = createUser();
+      }
+      console.log('The user is: ', result);
+      resolve(result);
+    });
   });
 };
 
 const assignUser = () => {
-  if (thirdOdds) {
-    return findUser();
-  }
-  return createUser();
+  return new Promise((resolve, reject) => {
+    const result = thirdOdds() ? findUser() : createUser();
+    resolve(result);
+  });
 };
 
 const generateTitle = () => {
   const startIndex = inclusiveRandom(0, 100);
   const endIndex = inclusiveRandom(startIndex + 5, startIndex + 100);
-  return randomHipsum.slice(startIndex, endIndex);
+  return randomHipsum().slice(startIndex, endIndex);
 };
 
 const generateReview = () => {
   let review = '';
-  randomArray(1, 7).forEach((paragraph) => {
-    review = `${review} ${paragraph} \n`;
+  randomArray(1, 7).forEach(() => {
+    review = `${review}${randomHipsum()}\n`;
   });
   return review.slice(0, review.length - 3);
   // TODO: finish less sophisticated algorithm
@@ -83,19 +123,11 @@ const generateReview = () => {
   // inclusiveRandom(1, 5) === 3 ? review.push(sentence);
 };
 
-const getReviewId = () => {
-  db.query('SELECT id FROM reviews ORDER BY DATE DESC;', (err, data) => {
-    if (err) throw err;  
-    console.log('The review id is: ', data);
-    return data;
-  });
-};
-
-const addImage = () => {
+const addImage = (review) => {
   const img = {};
-  img.review = getReviewId();
+  img.review = review;
   img.title = generateTitle();
-  img.url = randomProductPic;
+  img.url = randomProductPic();
   return img;
 };
 
@@ -104,6 +136,7 @@ const addImage = () => {
 ** }; TODO: generate comments/replies */
 
 const updateAggregate = (product, review) => {
+
   //   CREATE TABLE aggregates (
 //   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 //   product_id INT NOT NULL,
@@ -115,21 +148,26 @@ const updateAggregate = (product, review) => {
 
 const generateAggregate = (product) => {
   db.query(`SELECT rating FROM reviews WHERE product_id=${product};`, (err, data) => {
-    if (err) throw err;  
+    if (err) return console.log('The aggregates are: 0,0');  
     console.log('The review id is: ', data);
     const aggregates = {};
     let total = 0;
     data.forEach((rating) => total += rating);
     aggregates.score = total / data.length;
     aggregates.qty = data.length;
-    db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`;
+    db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`, (err, data) => {
+      if (err) console.log('error aggregating');
+      console.log('The aggregates are: ', data);
+      return data;
+    });
   });
 };
 
-export default {
+export {
   inclusiveRandom,
   randomArray,
   thirdOdds,
+  seventhOdds,
   assignUser,
   generateTitle,
   generateReview,

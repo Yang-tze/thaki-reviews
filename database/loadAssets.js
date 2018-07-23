@@ -123,7 +123,7 @@ productPics.push('images (9) copy.jpeg');
 productPics.push('images copy.jpeg');
 productPics.push('images copy 2.jpeg');
 
-export default {
+export {
   products,
   hipsum,
   profilePics,

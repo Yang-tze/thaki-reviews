@@ -9,6 +9,4 @@ const db = mysql.createConnection({
 
 db.connect();
 
-db.end();
-
-export default db;
+export { db };
