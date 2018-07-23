@@ -35,13 +35,13 @@ const generateUsername = () => {
 const insertUser = (user) => {
   return new Promise((resolve, reject) => {
     const queryString = `INSERT INTO users (username, img) VALUES("${user.username}", "${user.img}");`;
-    console.log('insert', queryString);
+    // console.log('insert', queryString);
     db.query(queryString, (err, data) => {
       if (err) {
-        console.log('error inserting user', err);
+        // console.log('error inserting user', err);
         throw err;
       }
-      console.log('The insertUser user is: ', data.insertId);
+      // console.log('The insertUser user is: ', data.insertId);
       resolve(data.insertId);
     });
   });  
@@ -58,17 +58,18 @@ const createUser = () => {
       user.img = randomProfilePic();
     }
     let queryString = `SELECT id FROM users WHERE username="${user.username}";`;
-    console.log('createUser', queryString);
+    // console.log('createUser', queryString);
     db.query(queryString, (err, data) => {
       if (err) {
-        console.log('inserting', err);
+        // console.log('inserting', err);
         insertUser(user);
       }
-      console.log('The createUser user is:', data);
+      // console.log('The createUser user is:', data);
       if (data.length < 1) {
         resolve(insertUser(user));
       } else {
-        resolve(data);
+        console.log('the createUser id is', data[0].id);
+        resolve(data[0].id);
       }
     });
   });
@@ -77,11 +78,11 @@ const createUser = () => {
 const findUser = () => {
   return new Promise((resolve, reject) => {
     const queryString = 'SELECT id FROM users ORDER BY RAND() LIMIT 1;';
-    console.log('findUser', queryString);
+    // console.log('findUser', queryString);
     db.query(queryString, (err, data) => {
       if (err) {
         createUser();
-        console.log('error creating user');
+        // console.log('error creating user');
       }
       let result = '';
       if (data) {
@@ -89,7 +90,7 @@ const findUser = () => {
       } else {
         result = createUser();
       }
-      console.log('The user is: ', result);
+      // console.log('The user is: ', result);
       resolve(result);
     });
   });
@@ -157,7 +158,7 @@ const generateAggregate = (product) => {
     aggregates.qty = data.length;
     db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`, (err, data) => {
       if (err) console.log('error aggregating');
-      console.log('The aggregates are: ', data);
+      // console.log('The aggregates are: ', data);
       return data;
     });
   });
