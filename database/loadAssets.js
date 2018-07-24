@@ -1,6 +1,10 @@
-const products = Array.apply(null, Array(100)).map((x, i) => {
-  return i + 1;
-});
+import {
+  fixedArray,
+} from './seedHelpers.js';
+
+const products = fixedArray(100);
+
+const userIds = fixedArray(250);
 
 const hipsum = [];
 hipsum.push('Lorem ipsum dolor amet wayfarers tbh echo park, occaecat cupidatat migas poutine humblebrag gochujang schlitz artisan hashtag eiusmod celiac vexillologist. Pinterest vinyl tacos snackwave franzen. Vegan vice humblebrag, commodo ut yuccie polaroid meditation cardigan. Dolore venmo sed nisi dolor, keffiyeh elit occaecat cardigan asymmetrical. Irure keffiyeh thundercats commodo hoodie lyft. Next level beard voluptate pug.');
@@ -125,6 +129,7 @@ productPics.push('images copy 2.jpeg');
 
 export {
   products,
+  userIds,
   hipsum,
   profilePics,
   productPics,

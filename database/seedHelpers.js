@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
+// TODO: remove if unnecessary
 
-import { db } from './connection.js';
 import {
   hipsum,
   profilePics,
@@ -15,6 +15,10 @@ const inclusiveRandom = (min, max) => {
 
 const randomArray = (min, max) => {
   return Array.apply(null, Array(inclusiveRandom(min, max))).map((x, i) => i);
+};
+
+const fixedArray = (size) => {
+  return Array(size).fill().map((x, i) => i + 1);
 };
 
 const thirdOdds = () => inclusiveRandom(1, 3) === 3;
@@ -32,75 +36,8 @@ const generateUsername = () => {
   return randomHipsum().slice(startIndex).split(' ')[0];
 };
 
-const insertUser = (user) => {
-  return new Promise((resolve, reject) => {
-    const queryString = `INSERT INTO users (username, img) VALUES("${user.username}", "${user.img}");`;
-    // console.log('insert', queryString);
-    db.query(queryString, (err, data) => {
-      if (err) {
-        // console.log('error inserting user', err);
-        throw err;
-      }
-      // console.log('The insertUser user is: ', data.insertId);
-      resolve(data.insertId);
-    });
-  });  
-};
-
-const createUser = () => {
-  return new Promise((resolve, reject) => {
-    const user = {};
-    user.username = '';
-    while (user.username.length < 2) {
-      user.username = generateUsername();
-    }
-    if (thirdOdds) {
-      user.img = randomProfilePic();
-    }
-    let queryString = `SELECT id FROM users WHERE username="${user.username}";`;
-    // console.log('createUser', queryString);
-    db.query(queryString, (err, data) => {
-      if (err) {
-        // console.log('inserting', err);
-        insertUser(user);
-      }
-      // console.log('The createUser user is:', data);
-      if (data.length < 1) {
-        resolve(insertUser(user));
-      } else {
-        console.log('the createUser id is', data[0].id);
-        resolve(data[0].id);
-      }
-    });
-  });
-};
-
-const findUser = () => {
-  return new Promise((resolve, reject) => {
-    const queryString = 'SELECT id FROM users ORDER BY RAND() LIMIT 1;';
-    // console.log('findUser', queryString);
-    db.query(queryString, (err, data) => {
-      if (err) {
-        createUser();
-        // console.log('error creating user');
-      }
-      let result = '';
-      if (data) {
-        result = data[0].id;
-      } else {
-        result = createUser();
-      }
-      // console.log('The user is: ', result);
-      resolve(result);
-    });
-  });
-};
-
 const assignUser = () => {
-  return new Promise((resolve, reject) => {
-    const result = thirdOdds() ? findUser() : createUser();
-    resolve(result);
-  });
+  return thirdOdds() ? inclusiveRandom(200, 250) : inclusiveRandom(1, 199);
 };
 
 const generateTitle = () => {
@@ -167,8 +104,11 @@ const generateAggregate = (product) => {
 export {
   inclusiveRandom,
   randomArray,
+  fixedArray,
   thirdOdds,
   seventhOdds,
+  generateUsername,
+  randomProfilePic,
   assignUser,
   generateTitle,
   generateReview,

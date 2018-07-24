@@ -5,6 +5,7 @@
   "main": "src/index.jsx",
   "scripts": {
     "create": "mysql -u root < database/schema.sql",
+    "populate": "mysql -u root < database/seed.sql",
     "seed": "node database/start.js",
     "build:dev": "webpack --config webpack.config.js -w",
     "serve:dev": "nodemon server/start.js",
