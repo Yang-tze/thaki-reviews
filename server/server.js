@@ -32,29 +32,19 @@ app.get('/reviewsummary/:productId', (req, res) => {
 });
 
 app.get('/reviews/:productId', (req, res) => {
-  const product = req.params.productId;
-  if (!productIds.includes(Number(product))) {
+  const product = Number(req.params.productId);
+  if (!productIds.includes(product)) {
     res.sendStatus(400);
   }
   getReviews(product).then(reviews => res.send(reviews));
 });
 
-app.get('/comments', (req, res) => {
-  const review = req.body;
-  // Output:
-  // [{
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // title: VARCHAR(250),
-  // comment: VARCHAR(65000),
-  // replies: [
-  //   user: {username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250},
-  //   reply: VARCHAR(65000),
-  //   abuse: INT(9)
-  // ] // array of objects (1 for each reply)
-  // }] // array of objects (1 for each comment)
-  res.send();
+app.get('/comments/:reviewId', (req, res) => {
+  const review = Number(req.params.reviewId);
+  if (typeof review !== 'number') {
+    res.sendStatus(400);
+  }
+  getComments(review).then(reviews => res.send(reviews));
 });
 
 app.post('/addreview', (req, res) => {

@@ -12,6 +12,21 @@ const getAggregate = (product) => {
 };
 
 const getReviews = (product) => {
+  return new Promise((resolve) => {
+    db.query(`SELECT * FROM reviews WHERE product_id=${product};`, (err, data) => {
+      if (err) return 404;
+      resolve(data);
+    });
+  });
+};
+
+const getComments = (review) => {
+  return new Promise((resolve) => {
+    db.query(`SELECT * FROM comments WHERE review_id=${review};`, (err, data) => {
+      if (err) return 404;
+      resolve(data);
+    });
+  });
 };
 
 const addReview = (review) => {
@@ -37,6 +52,7 @@ const reportComment = (abuse) => {
 export {
   getAggregate,
   getReviews,
+  getComments,
   addReview,
   addComment,
   updateReview,
