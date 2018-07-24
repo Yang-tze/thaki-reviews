@@ -1,5 +1,4 @@
 import Promise from 'bluebird';
-// TODO: remove if unnecessary
 
 import {
   hipsum,
@@ -52,14 +51,14 @@ const generateReview = () => {
     review = `${review}${randomHipsum()}\n`;
   });
   return review.slice(0, review.length - 3);
-  // TODO: finish less sophisticated algorithm
-  // const length = inclusiveRandom(1, 5);
-  // hipsum.forEach((paragraph) => {
-  // if (inclusiveRandom(1, 7) === 3) {
-  // const sentences = paragraph.split('.');
-  // sentences.forEach((sentence) => {
-  // inclusiveRandom(1, 5) === 3 ? review.push(sentence);
 };
+/** TODO: improve review algorithm
+** const length = inclusiveRandom(1, 5);
+** hipsum.forEach((paragraph) => {
+** if (inclusiveRandom(1, 7) === 3) {
+** const sentences = paragraph.split('.');
+** sentences.forEach((sentence) => {
+** inclusiveRandom(1, 5) === 3 ? review.push(sentence); */
 
 const addImage = (review) => {
   const img = {};
@@ -69,24 +68,19 @@ const addImage = (review) => {
   return img;
 };
 
-/* const addComments = (review) => {
+/* TODO: generate comments/replies
+** const addComments = (review) => {
 **  assignUser();
-** }; TODO: generate comments/replies */
+** }; */
 
 const updateAggregate = (product, review) => {
-
-  //   CREATE TABLE aggregates (
-//   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-//   product_id INT NOT NULL,
-//   score INT(9),
-//   qty INT(9)
-//   );
-  // write record @ product id, filtering & averaging reviews by product id
+  // TODO: write record @ product id, filtering & averaging reviews by product id
 };
 
+// TODO: finish
 const generateAggregate = (product) => {
   db.query(`SELECT rating FROM reviews WHERE product_id=${product};`, (err, data) => {
-    if (err) return console.log('The aggregates are: 0,0');  
+    if (err) return console.log('error: ', err);  
     console.log('The review id is: ', data);
     const aggregates = {};
     let total = 0;
@@ -95,10 +89,23 @@ const generateAggregate = (product) => {
     aggregates.qty = data.length;
     db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`, (err, data) => {
       if (err) console.log('error aggregating');
-      // console.log('The aggregates are: ', data);
+      console.log('The aggregates are: ', data);
       return data;
     });
   });
+};
+
+const taskChain = (array) => {
+  return array.reduce((promiseChain, task) => {
+    return promiseChain.then(chainResults => task.then(currentResult => [ ...chainResults, currentResult ]));
+  }, Promise.resolve([]));
+};
+
+const taskChainCB = (array, callback) => {
+  return array.reduce((promiseChain, task) => {
+    return promiseChain.then(chainResults => task.then(currentResult => [...chainResults, currentResult]));
+  }, Promise.resolve([]))
+    .then(arrayOfResults => callback(arrayOfResults));
 };
 
 export {
@@ -114,4 +121,6 @@ export {
   generateReview,
   addImage,
   generateAggregate,
+  taskChain,
+  taskChainCB,
 };

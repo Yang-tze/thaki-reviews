@@ -2,7 +2,7 @@ import {
   fixedArray,
 } from './seedHelpers.js';
 
-const products = fixedArray(100);
+const productIds = fixedArray(100);
 
 const userIds = fixedArray(250);
 
@@ -128,7 +128,7 @@ productPics.push('images copy.jpeg');
 productPics.push('images copy 2.jpeg');
 
 export {
-  products,
+  productIds,
   userIds,
   hipsum,
   profilePics,

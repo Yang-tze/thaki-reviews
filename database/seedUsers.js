@@ -20,13 +20,8 @@ const createUser = (userId) => {
   return `INSERT INTO users (id, username, img) VALUES(${user.id}, "${user.username}", "${user.img}");\n`;
 };
 
-const addUsers = () => {
-  return new Promise((resolve) => {
-    resolve(userIds.reduce((acc, user) => {
-      console.log(user);
-      return acc + createUser(user);
-    }, 'USE reviews;\n'));
-  });
-};
+const addUsers = () => new Promise((resolve) => {
+  resolve(userIds.reduce((acc, user) => acc + createUser(user), 'USE reviews;\n'));
+});
 
 export { addUsers };

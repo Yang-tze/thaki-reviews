@@ -1,7 +1,10 @@
 import fs from 'fs';
+import Promise from 'bluebird';
+
+import { addUsers } from './seedUsers.js';
 
 import {
-  products,
+  productIds,
 } from './loadAssets.js';
 
 // TODO: remove unused imports
@@ -14,11 +17,13 @@ import {
   generateTitle,
   generateReview,
   addImage,
+  taskChain,
+  taskChainCB,
 } from './seedHelpers.js';
 
-import { addUsers } from './seedUsers.js';
-
 let reviewId = 1;
+
+const stream = fs.createWriteStream('database/seed.sql');
 
 const createReview = (product) => {
   return new Promise((resolve) => {
@@ -33,6 +38,7 @@ const createReview = (product) => {
     review.notHelpful = thirdOdds ? inclusiveRandom(1, 15) : 0;
     review.images = [];
     review.id = reviewId;
+    reviewId += 1;
     if (seventhOdds) {
       randomArray(1, 6).forEach(() => {
         review.images.push(addImage(review.id));
@@ -52,23 +58,29 @@ const createReview = (product) => {
   ** } TODO: add comments/reply data */
 };
 
-const stream = fs.createWriteStream('database/seed.sql');
+const productReviews = product => randomArray(1, 20).map(x => () => createReview(product));
 
-const populateCSV = (products) => {
-  return new Promise((resolve) => {
-    let chain = Promise.resolve();
-    products.forEach((product) => {
-      const qty = randomArray(0, 20);
-      if (qty) {
-        qty.forEach(() => {
-          chain = chain.then(() => createReview(product).then(stream.write));
-        });
-      }
-    });
-    resolve(chain());
-  });
-};
+taskChain(productReviews(1)).then(console.log('resolved'));
 
-addUsers().then((csv) => stream.write(csv));
 
-// .then(populateCSV).then(stream.end);
+// const populateCSV = () => new Promise((resolve) => {
+//   console.log(productReviews(productIds[0]));
+//   taskChain(productReviews(productIds[0]));
+  // taskChain(productIds.map(product => taskChainCB(productReviews(product), stream.write))).then(() => resolve());
+  // taskChain(productIds, (product) => taskChain(productReviews(product), stream.write).then(() => resolve());
+  // productIds.reduce((productChain, product) => {
+  //   return productChain.then(chainResults => {
+  //     const qty = randomArray(0, 20);
+  //     qty.reduce((reviewChain, review) => {
+  //       return reviewChain.then(chainResults => {
+  //           createReview(review)
+  //         }).then(currentResult => [...chainResults, currentResult]);
+  //     }, Promise.resolve([]));
+  //   });
+  // }, Promise.resolve([]));
+
+  // const allReviews = productIds.map(product => () => taskChain(productReviews(product), stream.write));
+  // taskChain(allReviews, x => x).then(() => resolve());
+// });
+
+// addUsers().then((csv) => stream.write(csv)).then(() => populateCSV()).then(() => stream.end);
