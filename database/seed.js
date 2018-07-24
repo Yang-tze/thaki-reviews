@@ -17,6 +17,7 @@ import {
   generateTitle,
   generateReview,
   addImage,
+  generateAggregate,
   taskChain,
   taskChainCB,
 } from './seedHelpers.js';
@@ -51,36 +52,27 @@ const createReview = (product) => {
         csv = `${csv}\nINSERT INTO images (review_id, title, url) VALUES(${image.review}, "${image.title}", "${image.url}");`;
       });
     }
-    resolve(`${csv}\n`);
+    resolve(stream.write(`${csv}\n`));
   });
   /* if (inclusiveRandom(1, 10) === 7) {
   **   addComments(review);
   ** } TODO: add comments/reply data */
 };
 
-const productReviews = product => randomArray(1, 20).map(x => () => createReview(product));
+const productReviews = product => randomArray(1, 20).map(x => createReview(product));
 
-taskChain(productReviews(1)).then(console.log('resolved'));
-
-
-// const populateCSV = () => new Promise((resolve) => {
-//   console.log(productReviews(productIds[0]));
-//   taskChain(productReviews(productIds[0]));
-  // taskChain(productIds.map(product => taskChainCB(productReviews(product), stream.write))).then(() => resolve());
-  // taskChain(productIds, (product) => taskChain(productReviews(product), stream.write).then(() => resolve());
-  // productIds.reduce((productChain, product) => {
-  //   return productChain.then(chainResults => {
-  //     const qty = randomArray(0, 20);
-  //     qty.reduce((reviewChain, review) => {
-  //       return reviewChain.then(chainResults => {
-  //           createReview(review)
-  //         }).then(currentResult => [...chainResults, currentResult]);
-  //     }, Promise.resolve([]));
-  //   });
-  // }, Promise.resolve([]));
-
-  // const allReviews = productIds.map(product => () => taskChain(productReviews(product), stream.write));
-  // taskChain(allReviews, x => x).then(() => resolve());
-// });
-
-// addUsers().then((csv) => stream.write(csv)).then(() => populateCSV()).then(() => stream.end);
+addUsers().then((csv) => stream.write(csv)).then(() => {
+  const allReviews = productIds.map((product) => {
+    return new Promise((resolve) => {
+      resolve(taskChain(productReviews(product)));
+    });
+  });
+  taskChain(allReviews);
+}).then(() => {
+  const aggregates = productIds.map((product) => {
+    return new Promise((resolve) => {
+      resolve(stream.write(generateAggregate(product));
+    });
+  });
+  taskChain(aggregates);
+}).then(() => stream.end);

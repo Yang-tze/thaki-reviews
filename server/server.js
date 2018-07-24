@@ -5,7 +5,7 @@ import {
   addComment,
   updateReview,
   reportComment,
-} from '../database/serverHelpers';
+} from './serverHelpers';
 
 import { db } from '../database/connection';
 

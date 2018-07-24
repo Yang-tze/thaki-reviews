@@ -6,6 +6,8 @@ import {
   productPics,
 } from './loadAssets.js';
 
+import { db } from './connection.js';
+
 const inclusiveRandom = (min, max) => {
   const minR = Math.ceil(min);
   const maxR = Math.floor(max);
@@ -73,24 +75,21 @@ const addImage = (review) => {
 **  assignUser();
 ** }; */
 
-const updateAggregate = (product, review) => {
-  // TODO: write record @ product id, filtering & averaging reviews by product id
-};
-
-// TODO: finish
 const generateAggregate = (product) => {
-  db.query(`SELECT rating FROM reviews WHERE product_id=${product};`, (err, data) => {
-    if (err) return console.log('error: ', err);  
-    console.log('The review id is: ', data);
-    const aggregates = {};
-    let total = 0;
-    data.forEach((rating) => total += rating);
-    aggregates.score = total / data.length;
-    aggregates.qty = data.length;
-    db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`, (err, data) => {
-      if (err) console.log('error aggregating');
-      console.log('The aggregates are: ', data);
-      return data;
+  return new Promise((resolve) => {
+    db.query(`SELECT rating FROM reviews WHERE product_id=${product};`, (err, data) => {
+      if (err) return throw err;
+      console.log('The review data is: ', data);
+      const aggregates = {};
+      let total = 0;
+      data.forEach((rating) => total += rating);
+      aggregates.score = total / data.length;
+      aggregates.qty = data.length;
+      db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`, (err, data) => {
+        if (err) console.log('error aggregating');
+        console.log('The aggregates are: ', data);
+        return data;
+      });
     });
   });
 };
