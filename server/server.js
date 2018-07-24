@@ -1,12 +1,14 @@
+import Promise from 'bluebird';
+
 import {
-  getReviews,
   getAggregate,
+  getReviews,
   addReview,
   addComment,
   updateReview,
   reportComment,
-} from './serverHelpers';
-
+} from './serverHelpers.js';
+import { productIds } from '../database/loadAssets.js';
 import { db } from '../database/connection';
 
 const express = require('express');
@@ -21,40 +23,20 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static('public'));
 
-app.get('/reviewsummary', (req, res) => {
-  const product = req.body;
-  // Output: {
-  // score: INT(9),
-  // quantity: INT(9)
-  // }
-  res.send();
+app.get('/reviewsummary/:productId', (req, res) => {
+  const product = req.params.productId;
+  if (!productIds.includes(Number(product))) {
+    res.sendStatus(400);
+  }
+  getAggregate(product).then(summary => res.send(summary));
 });
 
-app.get('/reviews', (req, res) => {
-  const product = req.body;
-  // Output:
-  // [{
-  // review: {
-  // date: DATETIME,
-  // rating: INT(1) NOT NULL,
-  // title: VARCHAR(250),
-  // options: JSON,
-  // verified: BOOL,
-  // review: VARCHAR(65000),
-  // helpful: INT(9)
-  // not_helpful: INT(9),
-  // abuse: INT(9)
-  // },
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // images: [{
-  // title: VARCHAR(250),
-  // url: VARCHAR(250)
-  // }], // array of objects (1 for each image)
-  // comments: INT(9)
-  // }] // array of objects (1 for each review)
-  res.send();
+app.get('/reviews/:productId', (req, res) => {
+  const product = req.params.productId;
+  if (!productIds.includes(Number(product))) {
+    res.sendStatus(400);
+  }
+  getReviews(product).then(reviews => res.send(reviews));
 });
 
 app.get('/comments', (req, res) => {

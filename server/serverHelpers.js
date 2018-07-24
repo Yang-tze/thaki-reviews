@@ -1,13 +1,17 @@
-const getReviews = (product) => {
-  // get all reviews, user info, images, comments for product
-};
+import Promise from 'bluebird';
+
+import { db } from '../database/connection.js';
 
 const getAggregate = (product) => {
-  // get aggregate score & review quantity
+  return new Promise((resolve) => {
+    db.query(`SELECT score, qty FROM aggregates WHERE product_id=${product};`, (err, data) => {
+      if (err) return 404;
+      resolve(data);
+    });
+  });
 };
 
-const updateAggregate = (product, review) => {
-  // TODO: write record @ product id, filtering & averaging reviews by product id
+const getReviews = (product) => {
 };
 
 const addReview = (review) => {
@@ -30,9 +34,9 @@ const reportComment = (abuse) => {
 // increment abuse in comment record
 };
 
-export default {
-  getReviews,
+export {
   getAggregate,
+  getReviews,
   addReview,
   addComment,
   updateReview,
