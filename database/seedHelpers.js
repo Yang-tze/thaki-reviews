@@ -75,25 +75,6 @@ const addImage = (review) => {
 **  assignUser();
 ** }; */
 
-const generateAggregate = (product) => {
-  return new Promise((resolve) => {
-    db.query(`SELECT rating FROM reviews WHERE product_id=${product};`, (err, data) => {
-      if (err) return throw err;
-      console.log('The review data is: ', data);
-      const aggregates = {};
-      let total = 0;
-      data.forEach((rating) => total += rating);
-      aggregates.score = total / data.length;
-      aggregates.qty = data.length;
-      db.query(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});`, (err, data) => {
-        if (err) console.log('error aggregating');
-        console.log('The aggregates are: ', data);
-        return data;
-      });
-    });
-  });
-};
-
 const taskChain = (array) => {
   return array.reduce((promiseChain, task) => {
     return promiseChain.then(chainResults => task.then(currentResult => [ ...chainResults, currentResult ]));
@@ -119,7 +100,6 @@ export {
   generateTitle,
   generateReview,
   addImage,
-  generateAggregate,
   taskChain,
   taskChainCB,
 };

@@ -28,7 +28,7 @@ FOREIGN KEY (user_id) REFERENCES users(id)
 CREATE TABLE aggregates (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 product_id INT NOT NULL,
-score INT(9),
+score DECIMAL(2,1),
 qty INT(9)
 );
 

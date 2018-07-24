@@ -3,9 +3,7 @@ import Promise from 'bluebird';
 
 import { addUsers } from './seedUsers.js';
 
-import {
-  productIds,
-} from './loadAssets.js';
+import { productIds } from './loadAssets.js';
 
 // TODO: remove unused imports
 import {
@@ -17,7 +15,6 @@ import {
   generateTitle,
   generateReview,
   addImage,
-  generateAggregate,
   taskChain,
   taskChainCB,
 } from './seedHelpers.js';
@@ -61,18 +58,11 @@ const createReview = (product) => {
 
 const productReviews = product => randomArray(1, 20).map(x => createReview(product));
 
-addUsers().then((csv) => stream.write(csv)).then(() => {
+addUsers().then(csv => stream.write(csv)).then(() => {
   const allReviews = productIds.map((product) => {
     return new Promise((resolve) => {
       resolve(taskChain(productReviews(product)));
     });
   });
   taskChain(allReviews);
-}).then(() => {
-  const aggregates = productIds.map((product) => {
-    return new Promise((resolve) => {
-      resolve(stream.write(generateAggregate(product));
-    });
-  });
-  taskChain(aggregates);
 }).then(() => stream.end);

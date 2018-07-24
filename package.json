@@ -7,6 +7,8 @@
     "create": "mysql -u root < database/schema.sql",
     "seed": "node database/start.js",
     "populate": "mysql -u root < database/seed.sql",
+    "calculate": "node database/startAggregate.js",
+    "aggregate": "mysql -u root < database/aggregate.sql",
     "build:dev": "webpack --config webpack.config.js -w",
     "serve:dev": "nodemon server/start.js",
     "dev": "npm run build:dev && npm run serve:dev",
