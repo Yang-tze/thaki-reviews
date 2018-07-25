@@ -1,15 +1,12 @@
-import Promise from 'bluebird';
-
 import {
   getAggregate,
   getReviews,
-  getUserInfo,
   getImages,
   addReview,
   addComment,
   updateReview,
   reportComment,
-} from './serverHelpers.js';
+} from './serverHelpers';
 import { db } from '../database/connection';
 
 const express = require('express');
@@ -26,7 +23,7 @@ app.use(express.static('public'));
 
 app.get('/reviewsummary/:productId', (req, res) => {
   const product = Number(req.params.productId);
-  if (typeof product !== "number") {
+  if (typeof product !== 'number') {
     res.sendStatus(400);
   }
   getAggregate(product).then(summary => res.send(summary));
@@ -34,86 +31,32 @@ app.get('/reviewsummary/:productId', (req, res) => {
 
 app.get('/reviews/:productId', (req, res) => {
   const product = Number(req.params.productId);
-  if (typeof product !=="number") {
-    res.sendStatus(400);
-  }
-  const results = {};
-  getReviews(product).then((reviews) => {
-    results.reviews = reviews;
-    getImages(reviews).then((images) => {
-      results.images = images;
-      res.send(results);
-    });
-  });
+  if (typeof product !== 'number') res.sendStatus(400);
+  getReviews(product, getImages).then(results => res.send(results));
 });
 
 app.get('/comments/:reviewId', (req, res) => {
-  const review = Number(req.params.reviewId);
-  if (typeof review !== 'number') {
-    res.sendStatus(400);
-  }
-  getComments(review).then(reviews => res.send(reviews));
+  // TODO: add comment viewing
+  res.send();
 });
 
 app.post('/addreview', (req, res) => {
-  // Input:
-  // {
-  // review: {
-  // rating: INT(1) NOT NULL,
-  // title: VARCHAR(250),
-  // options: JSON,
-  // verified: BOOL,
-  // review: VARCHAR(65000)
-  // },
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // images: [{
-  // title: VARCHAR(250),
-  // url: VARCHAR(250)
-  // }] // array of objects (1 for each image)
-  // }
-  // Output: see app.get('/reviews')
+  // TODO: add review posting
   res.send();
 });
 
 app.post('/addcomment', (req, res) => {
-  // Input:
-  // {
-  // review_id: INT(9),
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // title: VARCHAR(250),
-  // comment: VARCHAR(65000)
-  // }
-  // Output: see app.get('/comments')
+  // TODO: add comment posting
   res.send();
 });
 
 app.post('/reviewfeedback', (req, res) => {
-  // Input:
-  // {
-  // review_id: INT(9),
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // category: VARCHAR(250)
-  // }
-  // Output: none; client-side increment
+  // TODO: add review helpful/not_helpful incrementing
   res.send();
 });
 
 app.post('/reportcomment', (req, res) => {
-  // Input:
-  // {
-  // review_id: INT(9),
-  // comment_id: INT(9),
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // }
-  // }
-  // Output: none; client-side confirmation
+  // TODO: add abuse incrementing
   res.send();
 });
 
