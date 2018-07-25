@@ -13,7 +13,20 @@ const getAggregate = (product) => {
 
 const getReviews = (product) => {
   return new Promise((resolve) => {
-    db.query(`SELECT * FROM reviews WHERE product_id=${product};`, (err, data) => {
+    db.query(`SELECT * FROM reviews INNER JOIN users ON reviews.user_id=users.id WHERE product_id=${product}`, (err, data) => {
+      if (err) return 404;
+      resolve(data);
+    });
+  });
+};
+
+const getImages = (reviews) => {
+  let queryString = '';
+  return new Promise((resolve) => {
+    reviews.forEach((review) => {
+      queryString += `SELECT * FROM images WHERE id=${review.id};\n`;
+    });
+    db.query(queryString, (err, data) => {
       if (err) return 404;
       resolve(data);
     });
@@ -52,6 +65,7 @@ const reportComment = (abuse) => {
 export {
   getAggregate,
   getReviews,
+  getImages,
   getComments,
   addReview,
   addComment,

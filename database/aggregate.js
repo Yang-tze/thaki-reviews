@@ -1,9 +1,9 @@
-import fs, { promises } from 'fs';
+import fs from 'fs';
 import Promise from 'bluebird';
 
-import { productIds } from './loadAssets.js';
-import { taskChainCB } from './seedHelpers.js';
-import { db } from './connection.js';
+import { productIds } from './loadAssets';
+import { taskChainCB } from './seedHelpers';
+import { db } from './connection';
 
 const generateAggregate = (product) => {
   return new Promise((resolve) => {
@@ -11,7 +11,9 @@ const generateAggregate = (product) => {
       if (err) throw err;
       const aggregates = {};
       let total = 0;
-      data.forEach(rating => total += rating.rating);
+      data.forEach((rating) => {
+        total += rating.rating;
+      });
       aggregates.score = Math.round(total / data.length * 2) / 2;
       aggregates.qty = data.length;
       resolve(`INSERT INTO aggregates (product_id, score, qty) VALUES(${product}, ${aggregates.score}, ${aggregates.qty});\n`);

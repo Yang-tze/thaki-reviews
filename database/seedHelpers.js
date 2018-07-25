@@ -82,6 +82,7 @@ const taskChain = (array) => {
 };
 
 const taskChainCB = (array, callback) => {
+  if (!array) return [];
   return array.reduce((promiseChain, task) => {
     return promiseChain.then(chainResults => task.then(currentResult => [...chainResults, currentResult]));
   }, Promise.resolve([]))

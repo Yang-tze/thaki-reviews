@@ -3,12 +3,13 @@ import Promise from 'bluebird';
 import {
   getAggregate,
   getReviews,
+  getUserInfo,
+  getImages,
   addReview,
   addComment,
   updateReview,
   reportComment,
 } from './serverHelpers.js';
-import { productIds } from '../database/loadAssets.js';
 import { db } from '../database/connection';
 
 const express = require('express');
@@ -24,8 +25,8 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(express.static('public'));
 
 app.get('/reviewsummary/:productId', (req, res) => {
-  const product = req.params.productId;
-  if (!productIds.includes(Number(product))) {
+  const product = Number(req.params.productId);
+  if (typeof product !== "number") {
     res.sendStatus(400);
   }
   getAggregate(product).then(summary => res.send(summary));
@@ -33,10 +34,17 @@ app.get('/reviewsummary/:productId', (req, res) => {
 
 app.get('/reviews/:productId', (req, res) => {
   const product = Number(req.params.productId);
-  if (!productIds.includes(product)) {
+  if (typeof product !=="number") {
     res.sendStatus(400);
   }
-  getReviews(product).then(reviews => res.send(reviews));
+  const results = {};
+  getReviews(product).then((reviews) => {
+    results.reviews = reviews;
+    getImages(reviews).then((images) => {
+      results.images = images;
+      res.send(results);
+    });
+  });
 });
 
 app.get('/comments/:reviewId', (req, res) => {
