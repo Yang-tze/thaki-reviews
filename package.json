@@ -5,6 +5,10 @@
   "main": "src/index.jsx",
   "scripts": {
     "create": "mysql -u root < database/schema.sql",
+    "seed": "node database/start.js",
+    "populate": "mysql -u root < database/seed.sql",
+    "calculate": "node database/startAggregate.js",
+    "aggregate": "mysql -u root < database/aggregate.sql",
     "build:dev": "webpack --config webpack.config.js -w",
     "serve:dev": "nodemon server/start.js",
     "dev": "npm run build:dev && npm run serve:dev",
@@ -25,8 +29,10 @@
   "homepage": "https://github.com/cheyennenoel/review-module#readme",
   "dependencies": {
     "babel-register": "^6.26.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "fs": "0.0.1-security",
     "morgan": "^1.9.0",
     "mysql": "^2.16.0",
     "path": "^0.12.7",

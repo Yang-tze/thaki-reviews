@@ -6,6 +6,10 @@ const getAggregate = (product) => {
   // get aggregate score & review quantity
 };
 
+const updateAggregate = (product, review) => {
+  // TODO: write record @ product id, filtering & averaging reviews by product id
+};
+
 const addReview = (review) => {
 // add users record if new
 // add reviews record (w/ foreign key user_id)

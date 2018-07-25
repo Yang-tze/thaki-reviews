@@ -7,8 +7,4 @@ const db = mysql.createConnection({
   database: 'reviews',
 });
 
-db.connect();
-
-db.end();
-
-export default db;
+export { db };

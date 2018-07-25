@@ -6,8 +6,7 @@ USE reviews;
 
 CREATE TABLE users (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-username VARCHAR(45),
-url VARCHAR(250),
+username VARCHAR(250),
 img VARCHAR(250)
 );
 
@@ -18,7 +17,6 @@ user_id INT NOT NULL,
 product_id INT NOT NULL,
 rating INT(1) NOT NULL,
 title VARCHAR(250),
-options JSON,
 verified BOOL,
 review VARCHAR(65000),
 helpful INT(9),
@@ -30,7 +28,7 @@ FOREIGN KEY (user_id) REFERENCES users(id)
 CREATE TABLE aggregates (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 product_id INT NOT NULL,
-score INT(9),
+score DECIMAL(2,1),
 qty INT(9)
 );
 
