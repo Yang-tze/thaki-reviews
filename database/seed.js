@@ -64,5 +64,5 @@ addUsers().then(csv => stream.write(csv)).then(() => {
       resolve(taskChain(productReviews(product)));
     });
   });
-  taskChain(allReviews);
-}).then(() => stream.end);
+  taskChainCB(allReviews, () => stream.end());
+});
