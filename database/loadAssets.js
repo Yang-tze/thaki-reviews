@@ -1,6 +1,6 @@
 import {
   fixedArray,
-} from './seedHelpers.js';
+} from './seedHelpers';
 
 const productIds = fixedArray(100);
 

@@ -8,7 +8,7 @@ import {
 import {
   generateUsername,
   randomProfilePic,
-} from './seedHelpers.js';
+} from './seedHelpers';
 
 const createUser = (userId) => {
   const user = {};
