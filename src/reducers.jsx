@@ -1,59 +1,29 @@
 import { combineReducers } from 'redux';
 import {
   Filters,
-  
+  filter,
+  search,
 } from './actions';
-
-const helpful = (state = 0, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-    default:
-      return state;
-  }
-}
-
-
-const { SHOW_ALL } = VisibilityFilters
 ​
-import { VisibilityFilters } from '../actions'
-​
-const visibilityFilter = (state = VisibilityFilters.SHOW_ALL, action) => {
+const filter = (state = Filters.SHOW_ALL, action) => {
   switch (action.type) {
-    case 'SET_VISIBILITY_FILTER':
+    case 'SET_FILTER':
       return action.filter
     default:
       return state
   }
 }
 ​
-const todos = (state = [], action) => {
+const search = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false
-        }
-      ]
-    case 'TOGGLE_TODO':
-      return state.map(todo =>
-        (todo.id === action.id)
-          ? {...todo, completed: !todo.completed}
-          : todo
-      )
+    case 'SET_QUERY':
+      return state.map(query => action.text)
     default:
       return state
   }
 }
 ​
 export default combineReducers({
-  todos,
-  visibilityFilter
+  filter,
+  search
 });
-
-// export default reviews;

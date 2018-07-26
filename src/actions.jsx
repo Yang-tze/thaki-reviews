@@ -1,4 +1,5 @@
 const Filters = {
+  SHOW_ALL: 'SHOW_ALL',
   TOP_RATED: 'TOP_RATED',
   MOST_RECENT: 'MOST_RECENT',
   ALL_REVIEWERS: 'ALL_REVIEWERS',
@@ -14,12 +15,12 @@ const Filters = {
 };
 
 const filter = filter => ({
-  type: 'FILTER',
+  type: 'SET_FILTER',
   filter
 });
 
 ​const search = query => ({
-  type: 'SEARCH',
+  type: 'SET_QUERY',
   query
 });
 
