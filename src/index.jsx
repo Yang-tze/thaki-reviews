@@ -1,11 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { createStore } from 'redux';
-import Widget from './widget.jsx';
-import Service from './service.jsx';
-// import reviews from './reducers'
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
 
-// const store = createStore(reviews);  store={store}
+import reducers from './reducers';
+import Widget from './widget';
+import Service from './service';
 
-ReactDOM.render(<Widget rating={3} qty={13}/>, document.getElementById('widget'));
-ReactDOM.render(<Service />, document.getElementById('service'));
+const store = createStore(reducers);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Widget />
+  </Provider>,
+  document.getElementById('widget')
+);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Service />
+  </Provider>,
+  document.getElementById('service')
+);
