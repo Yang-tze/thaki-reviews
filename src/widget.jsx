@@ -10,7 +10,6 @@ import {
 import Stars from './stars.jsx';
 import Summary from './summary.jsx';
 {/* 
-<Summary />
 <Link to='/'>{13}
  customer reviews</Link>
 <br></br> */}
@@ -50,6 +49,8 @@ class Widget extends React.Component {
       <div>
         <table>
         <Stars rating={0} /><br></br>
+        <Summary rating={0}/>
+        0 customer customer reviews
         </table>
       </div>
     );
@@ -57,6 +58,8 @@ class Widget extends React.Component {
       <div>
         <table>
         <Stars rating={this.state.aggregates.score} /><br></br>
+        <Summary aggregates={this.state.aggregates} />
+        {this.state.aggregates.score} customer reviews
         </table>
       </div>
     );
