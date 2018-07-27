@@ -61,6 +61,31 @@ const fetchReviews = product => (dispatch) => {
     }).then(json => dispatch(receiveReviews(json)));
 };
 
+const widgetModal = () => {
+  return {
+    type: 'WIDGET_MODAL',
+  };
+};
+
+const infoModal = () => {
+  return {
+    type: 'INFO_MODAL',
+  };
+};
+
+const photoModal = () => {
+  return {
+    type: 'PHOTO_MODAL',
+  };
+};
+
+const galleryModal = () => {
+  return {
+    type: 'GALLERY_MODAL',
+  };
+};
+
+
 // const Filters = {
 //   SHOW_ALL: 'SHOW_ALL',
 //   TOP_RATED: 'TOP_RATED',
@@ -96,6 +121,7 @@ export {
   requestReviews,
   receiveReviews,
   fetchReviews,
+  widgetModal,
   // Filters,
   // filter,
   // search,

@@ -6,6 +6,7 @@ import {
   receiveAggregates,
   requestReviews,
   receiveReviews,
+  widgetModal,
 //   Filters,
 //   filter,
 //   search,
@@ -122,10 +123,47 @@ const reviews = (
 //   }
 // }
 
+const modals = (
+  state = {
+    widget: false,
+    info: false,
+    photo: false,
+    gallery: false,
+    // refresh: false,
+  },
+  action
+) => {
+  switch (action.type) {
+    // case 'REFRESH_PRODUCT':
+    //   return Object.assign({}, state, { refresh: true });
+    case 'WIDGET_MODAL':
+      return Object.assign({}, state, {
+        widget: true,
+        // refresh: false
+      });
+      case 'INFO_MODAL':
+      return Object.assign({}, state, {
+        info: true,
+        // refresh: false
+      });    case 'PHOTO_MODAL':
+      return Object.assign({}, state, {
+        photo: true,
+        // refresh: false
+      });    case 'GALLERY_MODAL':
+      return Object.assign({}, state, {
+        gallery: true,
+        // refresh: false
+      });
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   product,
   aggregates,
   reviews,
+  modals,
   // search
 });
 

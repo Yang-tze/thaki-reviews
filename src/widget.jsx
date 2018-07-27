@@ -5,6 +5,7 @@ import {
   selectProduct,
   fetchAggregates,
   fetchReviews,
+  widgetModal,
 } from './actions.jsx';
 
 import Stars from './stars.jsx';
@@ -34,6 +35,10 @@ class Widget extends React.Component {
     this.props.store.dispatch(selectProduct(this.props.url.params.productId));
     this.props.store.dispatch(fetchAggregates(this.props.url.params.productId));
     this.props.store.dispatch(fetchReviews(this.props.url.params.productId));
+  }
+
+  onMouseOver() {
+    this.props.store.dispatch(widgetModal());
   }
 
   // componentDidUpdate() {
