@@ -7,9 +7,9 @@ import {
   fetchReviews,
 } from './actions.jsx';
 
-// import Stars from './stars.jsx';
-// import Summary from './summary.jsx';
-{/* <Stars rating={5} /><br></br>
+import Stars from './stars.jsx';
+import Summary from './summary.jsx';
+{/* 
 <Summary />
 <Link to='/'>{13}
  customer reviews</Link>
@@ -18,11 +18,19 @@ import {
 class Widget extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      product: null,
+      aggregates: {
+        score: null,
+        qty: null,
+      },
+      reviews: null,
+    }
     this.props.store.subscribe(() => {
-      this.setState({ 
+      this.setState({
+        product: this.props.store.getState().product,
         aggregates: this.props.store.getState().aggregates,
         reviews: this.props.store.getState().reviews,
-        product: this.props.store.getState().product,
       });
     });
   }
@@ -33,17 +41,26 @@ class Widget extends React.Component {
     this.props.store.dispatch(fetchReviews(this.props.url.params.productId));
   }
 
-  componentDidUpdate() {
-    console.log('widget state', this.props.store.getState(), this.state);
-  }
+  // componentDidUpdate() {
+  //   console.log('widget state', this.props.store.getState(), this.state);
+  // }
 
   render() {
-    return (
+    const blanks = (
       <div>
-        Widget
-        {/* {console.log('widget state', this.state)} */}
+        <table>
+        <Stars rating={0} /><br></br>
+        </table>
       </div>
     );
+    const aggregates = (
+      <div>
+        <table>
+        <Stars rating={this.state.aggregates.score} /><br></br>
+        </table>
+      </div>
+    );
+    return this.state.aggregates ? aggregates : blanks;
   }
 }
 

@@ -5,7 +5,7 @@ import {
   requestAggregates,
   receiveAggregates,
   requestReviews,
-  // receiveReviews,
+  receiveReviews,
 //   Filters,
 //   filter,
 //   search,

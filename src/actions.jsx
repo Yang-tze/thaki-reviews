@@ -94,7 +94,7 @@ export {
   receiveAggregates,
   fetchAggregates,
   requestReviews,
-  // receiveReviews,
+  receiveReviews,
   fetchReviews,
   // Filters,
   // filter,
