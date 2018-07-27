@@ -6,7 +6,7 @@ const Stars = props => (
     <StarRatingComponent
       name="aggregate"
       starCount={5}
-      value={props.rating}
+      value={5}
     />
   </div>
 );

@@ -9,9 +9,10 @@ import {
 } from './serverHelpers';
 import { db } from '../database/connection';
 
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import path from 'path';
 
 const app = express();
 const port = process.env.PORT || 3004;
@@ -19,7 +20,9 @@ const port = process.env.PORT || 3004;
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.use(express.static('public'));
+app.get('*/bundle.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../public/bundle.js'));
+});
 
 app.get('/reviewsummary/:productId', (req, res) => {
   const product = Number(req.params.productId);
@@ -59,5 +62,7 @@ app.post('/reportcomment', (req, res) => {
   // TODO: add abuse incrementing
   res.send();
 });
+
+app.use('/*', express.static('public'));
 
 app.listen(port, () => console.log('Listening on port:', port));

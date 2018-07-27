@@ -29,7 +29,12 @@ CREATE TABLE aggregates (
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 product_id INT NOT NULL,
 score DECIMAL(2,1),
-qty INT(9)
+qty INT(9),
+five INT(9),
+four INT(9),
+three INT(9),
+two INT(9),
+one INT(9)
 );
 
 CREATE TABLE images (

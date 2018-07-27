@@ -3,7 +3,7 @@ import Promise from 'bluebird';
 import { db } from '../database/connection';
 
 const getAggregate = product => new Promise((resolve) => {
-  db.query(`SELECT score, qty FROM aggregates WHERE product_id=${product};`, (err, data) => {
+  db.query(`SELECT * FROM aggregates WHERE product_id=${product};`, (err, data) => {
     if (err) return 404;
     resolve(data);
   });
