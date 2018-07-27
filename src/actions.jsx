@@ -36,16 +36,12 @@ const receiveAggregates = (aggregates) => {
   };
 };
 
-// const RECEIVE_REVIEWS = 'RECEIVE_REVIEWS';
-
-// const receiveReviews = (productId, json) => {
-//   return {
-//     type: RECEIVE_REVIEWS,
-//     productId,
-//     reviews: json.data.children.map(child => child.data),
-//     receivedAt: Date.now(),
-//   };
-// };
+const receiveReviews = (reviews) => {
+  return {
+    type: 'RECEIVE_REVIEWS',
+    reviews,
+  };
+};
 
 const fetchAggregates = product => (dispatch) => {
   dispatch(requestAggregates(product));
@@ -56,15 +52,14 @@ const fetchAggregates = product => (dispatch) => {
     }).then(json => dispatch(receiveAggregates(json[0])));
 };
 
-// const fetchReviews = productId => (dispatch) => {
-//   dispatch(requestReviews(productId));
-//   fetch(`http://127.0.0.1:3004/reviews/${productId}`)
-//     .then(
-//       response => response.json(),
-//       error => console.log('An error occurred.', error)
-//     )
-//     .then(json => dispatch(receiveReviews(productId, json[0])));
-// };
+const fetchReviews = product => (dispatch) => {
+  dispatch(requestReviews(product));
+  fetch(`http://127.0.0.1:3004/reviews/${product}`)
+    .then((data, err) => {
+      if (err) console.log('An error occurred.', err);
+      return data.json();
+    }).then(json => dispatch(receiveReviews(json)));
+};
 
 // const Filters = {
 //   SHOW_ALL: 'SHOW_ALL',
@@ -93,16 +88,14 @@ const fetchAggregates = product => (dispatch) => {
 // });
 
 export {
-  // RECEIVE_AGGREGATES,
-  // RECEIVE_REVIEWS,
-  selectProduct,
   // refreshProduct,
+  selectProduct,
   requestAggregates,
   receiveAggregates,
   fetchAggregates,
   requestReviews,
   // receiveReviews,
-  // fetchReviews,
+  fetchReviews,
   // Filters,
   // filter,
   // search,

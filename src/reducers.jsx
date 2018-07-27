@@ -1,16 +1,11 @@
 import { combineReducers } from 'redux';
 import {
-//   REFRESH_PRODUCT,
-//   REQUEST_AGGREGATES,
-//   REQUEST_REVIEWS,
-//   RECEIVE_AGGREGATES,
-//   RECEIVE_REVIEWS,
+//   refreshProduct,
   selectProduct,
   requestAggregates,
   receiveAggregates,
-//   refreshProduct,
   requestReviews,
-//   receiveReviews,
+  // receiveReviews,
 //   Filters,
 //   filter,
 //   search,
@@ -74,13 +69,12 @@ const reviews = (
         isFetching: true,
         // refresh: false,
       });
-    // case 'RECEIVE_REVIEWS':
-    //   return Object.assign({}, state, {
-    //     isFetching: false,
-    //     refresh: false,
-    //     items: action.reviews,
-    //     lastUpdated: action.receivedAt
-    //   })
+    case 'RECEIVE_REVIEWS':
+      return Object.assign({}, state, action.reviews, {
+        isFetching: false,
+        // refresh: false,
+        // lastUpdated: action.receivedAt
+      });
     default:
       return state;
   }

@@ -4,6 +4,7 @@ import React from 'react';
 import {
   selectProduct,
   fetchAggregates,
+  fetchReviews,
 } from './actions.jsx';
 
 // import Stars from './stars.jsx';
@@ -20,6 +21,7 @@ class Widget extends React.Component {
     this.props.store.subscribe(() => {
       this.setState({ 
         aggregates: this.props.store.getState().aggregates,
+        reviews: this.props.store.getState().reviews,
         product: this.props.store.getState().product,
       });
     });
@@ -28,7 +30,7 @@ class Widget extends React.Component {
   componentDidMount() {
     this.props.store.dispatch(selectProduct(this.props.url.params.productId));
     this.props.store.dispatch(fetchAggregates(this.props.url.params.productId));
-    // this.props.store.dispatch(fetchReviews(this.props.url.params.productId));
+    this.props.store.dispatch(fetchReviews(this.props.url.params.productId));
   }
 
   componentDidUpdate() {
