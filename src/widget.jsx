@@ -9,10 +9,6 @@ import {
 
 import Stars from './stars.jsx';
 import Summary from './summary.jsx';
-{/* 
-<Link to='/'>{13}
- customer reviews</Link>
-<br></br> */}
 
 class Widget extends React.Component {
   constructor(props) {
@@ -57,7 +53,7 @@ class Widget extends React.Component {
     const aggregates = (
       <div>
         <table>
-        <Stars rating={this.state.aggregates.score} /><br></br>
+        <Stars rating={this.state.aggregates.score} />&#129171;<br></br>
         <Summary aggregates={this.state.aggregates} />
         {this.state.aggregates.score} customer reviews
         </table>

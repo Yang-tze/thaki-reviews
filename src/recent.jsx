@@ -1,21 +1,18 @@
 import React from 'react';
 
-import Review from './review.jsx';
+// import Dashboard from './dashboard.jsx';
 // import Top from './top.jsx';
 
-class CustomerReviews extends React.Component {
+class Recent extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const reviews = (
+    return (
       <div>
         <table>
-        {this.props.reviews.map((review, index) =>
-          <Review key={index}
-          review={review} />
-        )}
+          Recent Reviews Component
         {/* <Dashboard score={this.state.aggregates.score} qty={this.state.aggregates.qty}/>
         <Top reviews={this.state.reviews} qty={this.state.qty}/>
         See all {this.props.qty} reviews >
@@ -27,10 +24,7 @@ class CustomerReviews extends React.Component {
         </table>
       </div>
     );
-    // console.log(this.props.reviews);
-    // return this.props.reviews ? <div>Reviews</div> : <div>Reviews2</div>;
-    return this.props.reviews ? reviews : '';
   }
 }
 
-export default CustomerReviews;
+export default Recent;

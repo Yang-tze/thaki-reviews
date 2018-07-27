@@ -4,11 +4,11 @@ import Progress from 'react-progressbar';
 import All from './all.jsx';
 
 const Summary = (props) => {
-  const five = Math.round(Number(props.aggregates.five) / Number(props.aggregates.qty) * 100);
-  const four = Math.round(Number(props.aggregates.four) / Number(props.aggregates.qty) * 100);
-  const three = Math.round(Number(props.aggregates.three) / Number(props.aggregates.qty) * 100);
-  const two = Math.round(Number(props.aggregates.two) / Number(props.aggregates.qty) * 100);
-  const one = Math.round(Number(props.aggregates.one) / Number(props.aggregates.qty) * 100);
+  const five = Math.round(Number(props.aggregates.five) / Number(props.aggregates.qty) * 100) || 0;
+  const four = Math.round(Number(props.aggregates.four) / Number(props.aggregates.qty) * 100) || 0 ;
+  const three = Math.round(Number(props.aggregates.three) / Number(props.aggregates.qty) * 100) || 0;
+  const two = Math.round(Number(props.aggregates.two) / Number(props.aggregates.qty) * 100) || 0;
+  const one = Math.round(Number(props.aggregates.one) / Number(props.aggregates.qty) * 100) || 0;
   return (
     <div>
       {props.aggregates.score} out of 5 stars{/*Hover modal*/}<br></br>

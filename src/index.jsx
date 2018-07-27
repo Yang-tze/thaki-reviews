@@ -14,7 +14,7 @@ import {
 
 import rootReducer from './reducers.jsx';
 import Widget from './widget.jsx';
-// import Service from './service.jsx';
+import Service from './service.jsx';
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
@@ -27,11 +27,11 @@ ReactDOM.render(
   document.getElementById('widget')
 );
 
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <BrowserRouter>
-//       <Route path='./:productId?' render={({ match }) => <Service match={match} {...this.props} />} />
-//     </BrowserRouter>,
-//   </Provider>  
-//   document.getElementById('service')
-// );
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter history={history}>
+      <Route path='/:productId?' render={({ match }) => <Service match={match} store={store} />} />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById('service')
+);

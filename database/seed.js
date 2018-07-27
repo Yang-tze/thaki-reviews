@@ -28,16 +28,16 @@ const createReview = (product) => {
     const review = {};
     review.product = product;
     review.user = assignUser();
-    review.rating = thirdOdds() ? inclusiveRandom(1, 5) : 4;
+    review.rating = thirdOdds() ? 4 : inclusiveRandom(1, 5);
     review.title = generateTitle();
     // review.options = {}; // TODO: add generateOptions
-    review.verified = thirdOdds ? true : false;
-    review.helpful = thirdOdds ? inclusiveRandom(1, 15) : 0;
-    review.notHelpful = thirdOdds ? inclusiveRandom(1, 15) : 0;
+    review.verified = thirdOdds() ? 1 : 0;
+    review.helpful = thirdOdds() ? inclusiveRandom(1, 15) : 0;
+    review.notHelpful = thirdOdds() ? inclusiveRandom(1, 15) : 0;
     review.images = [];
     review.id = reviewId;
     reviewId += 1;
-    if (seventhOdds) {
+    if (seventhOdds()) {
       randomArray(1, 6).forEach(() => {
         review.images.push(addImage(review.id));
       });

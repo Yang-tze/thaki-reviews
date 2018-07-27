@@ -1,9 +1,9 @@
 import React from 'react';
 
-const All = (props) => (
-   <div>
-      See all {props.qty} reviews >
-    </div>
+const All = ({ qty }) => (
+  <div>
+    See all {qty} reviews &#129170;
+  </div>
 );
 
 export default All;
