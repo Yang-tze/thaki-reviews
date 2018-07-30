@@ -5,6 +5,7 @@ const db = mysql.createConnection({
   user: 'root',
   password: '',
   database: 'reviews',
+  multipleStatements: true,
 });
 
 export { db };

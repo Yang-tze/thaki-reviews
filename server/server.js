@@ -1,12 +1,12 @@
 import {
-  getReviews,
   getAggregate,
+  getReviews,
+  getImages,
   addReview,
   addComment,
   updateReview,
   reportComment,
 } from './serverHelpers';
-
 import { db } from '../database/connection';
 
 const express = require('express');
@@ -21,119 +21,42 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static('public'));
 
-app.get('/reviewsummary', (req, res) => {
-  const product = req.body;
-  // Output: {
-  // score: INT(9),
-  // quantity: INT(9)
-  // }
-  res.send();
+app.get('/reviewsummary/:productId', (req, res) => {
+  const product = Number(req.params.productId);
+  if (typeof product !== 'number') {
+    res.sendStatus(400);
+  }
+  getAggregate(product).then(summary => res.send(summary));
 });
 
-app.get('/reviews', (req, res) => {
-  const product = req.body;
-  // Output:
-  // [{
-  // review: {
-  // date: DATETIME,
-  // rating: INT(1) NOT NULL,
-  // title: VARCHAR(250),
-  // options: JSON,
-  // verified: BOOL,
-  // review: VARCHAR(65000),
-  // helpful: INT(9)
-  // not_helpful: INT(9),
-  // abuse: INT(9)
-  // },
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // images: [{
-  // title: VARCHAR(250),
-  // url: VARCHAR(250)
-  // }], // array of objects (1 for each image)
-  // comments: INT(9)
-  // }] // array of objects (1 for each review)
-  res.send();
+app.get('/reviews/:productId', (req, res) => {
+  const product = Number(req.params.productId);
+  if (typeof product !== 'number') res.sendStatus(400);
+  getReviews(product, getImages).then(results => res.send(results));
 });
 
-app.get('/comments', (req, res) => {
-  const review = req.body;
-  // Output:
-  // [{
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // title: VARCHAR(250),
-  // comment: VARCHAR(65000),
-  // replies: [
-  //   user: {username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250},
-  //   reply: VARCHAR(65000),
-  //   abuse: INT(9)
-  // ] // array of objects (1 for each reply)
-  // }] // array of objects (1 for each comment)
+app.get('/comments/:reviewId', (req, res) => {
+  // TODO: add comment viewing
   res.send();
 });
 
 app.post('/addreview', (req, res) => {
-  // Input:
-  // {
-  // review: {
-  // rating: INT(1) NOT NULL,
-  // title: VARCHAR(250),
-  // options: JSON,
-  // verified: BOOL,
-  // review: VARCHAR(65000)
-  // },
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // images: [{
-  // title: VARCHAR(250),
-  // url: VARCHAR(250)
-  // }] // array of objects (1 for each image)
-  // }
-  // Output: see app.get('/reviews')
+  // TODO: add review posting
   res.send();
 });
 
 app.post('/addcomment', (req, res) => {
-  // Input:
-  // {
-  // review_id: INT(9),
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // title: VARCHAR(250),
-  // comment: VARCHAR(65000)
-  // }
-  // Output: see app.get('/comments')
+  // TODO: add comment posting
   res.send();
 });
 
 app.post('/reviewfeedback', (req, res) => {
-  // Input:
-  // {
-  // review_id: INT(9),
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // },
-  // category: VARCHAR(250)
-  // }
-  // Output: none; client-side increment
+  // TODO: add review helpful/not_helpful incrementing
   res.send();
 });
 
 app.post('/reportcomment', (req, res) => {
-  // Input:
-  // {
-  // review_id: INT(9),
-  // comment_id: INT(9),
-  // user: {
-  // username: VARCHAR(45), url: VARCHAR(250), image: VARCHAR(250
-  // }
-  // }
-  // Output: none; client-side confirmation
+  // TODO: add abuse incrementing
   res.send();
 });
 

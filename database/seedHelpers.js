@@ -77,11 +77,12 @@ const addImage = (review) => {
 
 const taskChain = (array) => {
   return array.reduce((promiseChain, task) => {
-    return promiseChain.then(chainResults => task.then(currentResult => [ ...chainResults, currentResult ]));
+    return promiseChain.then(chainResults => task.then(currentResult => [...chainResults, currentResult]));
   }, Promise.resolve([]));
 };
 
 const taskChainCB = (array, callback) => {
+  if (!array) return [];
   return array.reduce((promiseChain, task) => {
     return promiseChain.then(chainResults => task.then(currentResult => [...chainResults, currentResult]));
   }, Promise.resolve([]))
