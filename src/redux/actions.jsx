@@ -112,6 +112,12 @@ const galleryModal = () => {
 //   query,
 // });
 
+// const mapStateToProps = state => ({
+//   product: selectProduct(state.product),
+//   aggregates: receiveAggregates(state.aggregates),
+//   reviews: receiveReviews(state.reviews),
+// });
+
 export {
   // refreshProduct,
   selectProduct,
@@ -122,6 +128,7 @@ export {
   receiveReviews,
   fetchReviews,
   widgetModal,
+  // mapStateToProps,
   // Filters,
   // filter,
   // search,

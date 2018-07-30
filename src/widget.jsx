@@ -6,10 +6,10 @@ import {
   fetchAggregates,
   fetchReviews,
   widgetModal,
-} from './actions.jsx';
+} from './redux/actions.jsx';
 
-import Stars from './stars.jsx';
-import Summary from './summary.jsx';
+import StarsDropdown from './presentational/starsDropdown.jsx';
+import Summary from './presentational/summary.jsx';
 
 class Widget extends React.Component {
   constructor(props) {
@@ -35,10 +35,12 @@ class Widget extends React.Component {
     this.props.store.dispatch(selectProduct(this.props.url.params.productId));
     this.props.store.dispatch(fetchAggregates(this.props.url.params.productId));
     this.props.store.dispatch(fetchReviews(this.props.url.params.productId));
+    console.log('WidgetMounted')
   }
 
   onMouseOver() {
     this.props.store.dispatch(widgetModal());
+    console.log('widgetMouseOver')
   }
 
   // componentDidUpdate() {
@@ -49,7 +51,7 @@ class Widget extends React.Component {
     const blanks = (
       <div>
         <table>
-        <Stars rating={0} /><br></br>
+        <StarsDropdown rating={0} onMouseOver={this.onMouseOver.bind(this)}/>&#129171;<br></br>
         <Summary rating={0}/>
         0 customer customer reviews
         </table>
@@ -58,9 +60,9 @@ class Widget extends React.Component {
     const aggregates = (
       <div>
         <table>
-        <Stars rating={this.state.aggregates.score} />&#129171;<br></br>
+        <StarsDropdown rating={this.state.aggregates.score} onClick={console.log('onClick')} onMouseOver={this.onMouseOver.bind(this)}/>&#129171;<br></br>
         <Summary aggregates={this.state.aggregates} />
-        {this.state.aggregates.score} customer reviews
+        <a href={`*/#reviews`}>{this.state.aggregates.score} customer reviews</a>
         </table>
       </div>
     );

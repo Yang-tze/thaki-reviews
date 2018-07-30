@@ -49,7 +49,6 @@ const helpful = (review) => {
 const Review = ({review}) => (
   <div>
     Review
-    {console.log(review)}
     {review.img}  
     {review.username}<br></br>
     <Stars rating={review.rating} />  

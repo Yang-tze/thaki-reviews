@@ -1,5 +1,6 @@
 import React from 'react';
 
+import styles from '../styles.css';
 // import Dashboard from './dashboard.jsx';
 // import Top from './top.jsx';
 
@@ -12,7 +13,7 @@ class Recent extends React.Component {
     return (
       <div>
         <table>
-          Recent Reviews Component
+        <p className={styles.recenthead}>Most recent customer reviews</p>
         {/* <Dashboard score={this.state.aggregates.score} qty={this.state.aggregates.qty}/>
         <Top reviews={this.state.reviews} qty={this.state.qty}/>
         See all {this.props.qty} reviews >

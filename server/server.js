@@ -24,6 +24,18 @@ app.get('*/bundle.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/bundle.js'));
 });
 
+app.get('*/tether.min.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../node_modules/tether/dist/js/tether.min.js'));
+});
+
+app.get('*/drop.min.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../node_modules/tether-drop/dist/js/drop.min.js'));
+});
+
+app.get('*/drop-theme-arrows.css', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../node_modules/tether-drop/dist/css/drop-theme-arrows.css'));
+});
+
 app.get('/reviewsummary/:productId', (req, res) => {
   const product = Number(req.params.productId);
   if (typeof product !== 'number') {
