@@ -6,6 +6,7 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
+  resolve: { extensions: ['*', '.js', '.jsx'] },
   module: {
     rules: [
       {
@@ -16,6 +17,18 @@ module.exports = {
           options: {
             presets: ['env','react']
           }
+        }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader'
+      }, 
+      {
+        test: /\.css$/,
+        loader: 'css-loader',
+        query: {
+          modules: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]'
         }
       }
     ]
