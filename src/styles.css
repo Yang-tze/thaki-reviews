@@ -140,7 +140,7 @@ html, body {
 
 .progressbar {
   display: grid;
-  grid-template-columns: [left-border] auto [center-border] auto [right-border];
+  grid-template-columns: [left-border] 2fr [center-left-border] 5fr [center-right-border] 1fr [right-border];
   grid-template-rows: auto;
   grid-template-areas: "rating bar percent";
   color: #0066c0;
