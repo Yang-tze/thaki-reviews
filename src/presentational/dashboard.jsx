@@ -13,7 +13,7 @@ import Summary from './summary.jsx';
 const Dashboard = ({ aggregates }) => (
   <div className={styles.dashboard}>
     <p className={styles.mainhead}>Customer reviews</p>
-      <Stars rating={aggregates.score} qty={aggregates.qty}/>
+      <Stars rating={aggregates.score} qty={aggregates.qty} />
     <Summary aggregates={aggregates} />
   </div>
 );

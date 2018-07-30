@@ -20,6 +20,7 @@ const Summary = ({ aggregates }) => {
   };
   return (
     <div className={styles.link && styles.summary}>
+    <div 
       {aggregates.score} out of 5 stars{/*Hover modal*/} &#129170;
       <br></br>
       <div className={styles.progressbar}>
