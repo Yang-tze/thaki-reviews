@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Stars from './stars.jsx';
+import styles from '../styles.css';
+import SingleStars from './SingleStars';
 
 const date = (review) => {
   const months = {
@@ -46,12 +47,19 @@ const helpful = (review) => {
   return votes > 0 ? `${votes} found this helpful` : '';
 };
 
+const urlify = file => file.replace(' ', '+');
+
 const Review = ({review}) => (
-  <div>
-    Review
-    {review.img}  
-    {review.username}<br></br>
-    <Stars rating={review.rating} />  
+  <div className={styles.review}>
+    <div className={styles.user}>
+      <div className={styles.avatar}>
+        <img src={`https://s3-us-west-1.amazonaws.com/viamis-review-module-profile-pics/${urlify(review.img)}`} alt="profile"></img>
+      </div>
+      <span className={styles.username}>
+        {review.username}
+      </span>
+    </div>
+    <SingleStars rating={review.rating} />  
     {review.title}{/*Bold header*/}<br></br>
     {date(review.date)}<br></br>
     {verified(review)}<br></br>

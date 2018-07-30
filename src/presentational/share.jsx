@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from '../styles.css';
-import WriteButton from './writeButton.jsx';
+import WriteButton from './writeButton';
 
 const Share = () => (
   <div className={styles.share}>

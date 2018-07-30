@@ -1,14 +1,14 @@
 import React from 'react';
 
 import styles from './styles.css';
-import Main from './main.jsx';
-import Sidebar from './sidebar.jsx';
+import Main from './main';
+import Sidebar from './sidebar';
 
 import {
   selectProduct,
   fetchAggregates,
   fetchReviews,
-} from './redux/actions.jsx';
+} from './redux/actions';
 
 class Service extends React.Component {
   constructor(props) {
@@ -42,12 +42,13 @@ class Service extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <a id="reviews" href={`*/#reviews`}></a>
         <hr className={styles.divider}></hr>
         <div className={styles.service}>
-          <Main aggregates={this.state.aggregates} reviews={this.state.reviews} images={this.state.images}/>
+          <Main aggregates={this.state.aggregates} reviews={this.state.reviews} images={this.state.images} />
           <Sidebar reviews={this.state.reviews} images={this.state.images} />
         </div>
       </div>

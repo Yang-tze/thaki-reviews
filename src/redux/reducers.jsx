@@ -10,7 +10,7 @@ import {
 //   Filters,
 //   filter,
 //   search,
-} from './actions.jsx';
+} from './actions';
 
 const product = (state = null, action) => {
   switch (action.type) {
@@ -141,15 +141,17 @@ const modals = (
         widget: true,
         // refresh: false
       });
-      case 'INFO_MODAL':
+    case 'INFO_MODAL':
       return Object.assign({}, state, {
         info: true,
         // refresh: false
-      });    case 'PHOTO_MODAL':
+      });
+    case 'PHOTO_MODAL':
       return Object.assign({}, state, {
         photo: true,
         // refresh: false
-      });    case 'GALLERY_MODAL':
+      });
+    case 'GALLERY_MODAL':
       return Object.assign({}, state, {
         gallery: true,
         // refresh: false

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import styles from './styles.css';
-import Dashboard from './presentational/dashboard.jsx';
-import Share from './presentational/share.jsx';
-import Top from './presentational/top.jsx';
+import Dashboard from './presentational/dashboard';
+import Share from './presentational/share';
+import Top from './presentational/top';
 
 const Main = ({ aggregates, reviews, images }) => (
   <div className={styles.main}>

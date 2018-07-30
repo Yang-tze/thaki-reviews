@@ -18,10 +18,10 @@ const Summary = ({ aggregates }) => {
     if (string.length === 2) return `${string}% `;
     return `${string}%  `;
   };
+
   return (
-    <div className={styles.link && styles.summary}>
-    <div 
-      {aggregates.score} out of 5 stars{/*Hover modal*/} &#129170;
+    <div className={styles.summary}>
+    <div>
       <br></br>
       <div className={styles.progressbar}>
         <div className={styles.rating}>5 star </div>
@@ -50,11 +50,8 @@ const Summary = ({ aggregates }) => {
       </div>
       <All qty={aggregates.qty} />
     </div>
+    </div>
   );
 };
-
-// Summary.PropTypes = {
-//   aggregates: PropTypes.object,
-// };
 
 export default Summary;

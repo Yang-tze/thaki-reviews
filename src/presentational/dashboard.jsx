@@ -1,8 +1,8 @@
 import React from 'react';
 
 import styles from '../styles.css';
-import Stars from './stars.jsx';
-import Summary from './summary.jsx';
+import Stars from './stars';
+import Summary from './summary';
 // import WriteButton from './presentational/writeButton.jsx';
 // import CustomerReviews from './customerReviews.jsx';
 // import All from './presentational/all.jsx';
@@ -13,7 +13,7 @@ import Summary from './summary.jsx';
 const Dashboard = ({ aggregates }) => (
   <div className={styles.dashboard}>
     <p className={styles.mainhead}>Customer reviews</p>
-      <Stars rating={aggregates.score} qty={aggregates.qty} />
+    <Stars rating={aggregates.score} qty={aggregates.qty} />
     <Summary aggregates={aggregates} />
   </div>
 );
