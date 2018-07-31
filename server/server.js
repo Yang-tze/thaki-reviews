@@ -10,12 +10,14 @@ import {
 import { db } from '../database/connection';
 
 import express from 'express';
-import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
+import cors from 'cors';
 
 const app = express();
 const port = process.env.PORT || 3004;
+
+app.use(cors());
 
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
