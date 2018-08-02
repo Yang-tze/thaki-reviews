@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  review_data:
+    build: review_data/
+
+  review-module:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    depends_on:
+      - 'review_data'
+    ports:
+      - '3004:3004'
+
+

@@ -45,7 +45,7 @@ const receiveReviews = (reviews) => {
 
 const fetchAggregates = product => (dispatch) => {
   dispatch(requestAggregates(product));
-  fetch(`http://127.0.0.1:3004/reviewsummary/${product}`)
+  fetch(`http://ec2-34-224-31-187.compute-1.amazonaws.com/reviewsummary/${product}`)
     .then((data, err) => {
       if (err) console.log('An error occurred.', err);
       return data.json();
@@ -54,7 +54,7 @@ const fetchAggregates = product => (dispatch) => {
 
 const fetchReviews = product => (dispatch) => {
   dispatch(requestReviews(product));
-  fetch(`http://127.0.0.1:3004/reviews/${product}`)
+  fetch(`http://ec2-34-224-31-187.compute-1.amazonaws.com/reviews/${product}`)
     .then((data, err) => {
       if (err) console.log('An error occurred.', err);
       return data.json();

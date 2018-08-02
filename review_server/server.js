@@ -7,7 +7,7 @@ import {
   updateReview,
   reportComment,
 } from './serverHelpers';
-import { db } from '../database/connection';
+import { db } from '../review_data/connection';
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -21,10 +21,6 @@ app.use(cors());
 
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-app.get('*/bundle.js', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../public/bundle.js'));
-});
 
 app.get('*/tether.min.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../node_modules/tether/dist/js/tether.min.js'));
@@ -79,4 +75,6 @@ app.post('/reportcomment', (req, res) => {
 
 app.use('/*', express.static('public'));
 
-app.listen(port, () => console.log('Listening on port:', port));
+app.listen(port, () => {
+  console.log('Listening on port:', port);
+});

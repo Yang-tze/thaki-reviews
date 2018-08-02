@@ -1,0 +1,11 @@
+__tests__
+.circleci
+coverage
+node_modules
+src
+.eslintrc.json
+.gitignore
+config.jest.js
+config.js
+testsSetup.js
+webpack.config.js
