@@ -1,10 +1,10 @@
 FROM node:8.11.3-alpine
 
-RUN mkdir -p /review-module
+RUN mkdir -p /review-server
 
-WORKDIR /review-module
+WORKDIR /review-server
 
-COPY . /review-module
+COPY . /review-server
 
 RUN npm install
 

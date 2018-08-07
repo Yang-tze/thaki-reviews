@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
 
-import { db } from '../review_data/connection';
+import { db } from '../review-database/connection';
 
 const getAggregate = productId => new Promise((resolve) => {
   db.query(`SELECT * FROM aggregates WHERE product_id=${productId};`, (err, data) => {

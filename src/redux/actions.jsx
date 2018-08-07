@@ -45,20 +45,20 @@ const receiveReviews = (reviews) => {
 
 const fetchAggregates = product => (dispatch) => {
   dispatch(requestAggregates(product));
-  fetch(`http://ec2-34-224-31-187.compute-1.amazonaws.com/reviewsummary/${product}`)
-    .then((data, err) => {
-      if (err) console.log('An error occurred.', err);
-      return data.json();
-    }).then(json => dispatch(receiveAggregates(json[0])));
-};
-
-const fetchReviews = product => (dispatch) => {
-  dispatch(requestReviews(product));
-  fetch(`http://ec2-34-224-31-187.compute-1.amazonaws.com/reviews/${product}`)
+  fetch(`reviews/${product}`)
     .then((data, err) => {
       if (err) console.log('An error occurred.', err);
       return data.json();
     }).then(json => dispatch(receiveReviews(json)));
+};
+
+const fetchReviews = product => (dispatch) => {
+  dispatch(requestReviews(product));
+  fetch(`reviews/summary/${product}`)
+    .then((data, err) => {
+      if (err) console.log('An error occurred.', err);
+      return data.json();
+    }).then(json => dispatch(receiveAggregates(json[0])));
 };
 
 const widgetModal = () => {

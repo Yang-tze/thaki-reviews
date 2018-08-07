@@ -4,16 +4,16 @@
   "description": "",
   "main": "src/index.jsx",
   "scripts": {
-    "create": "review-module_database_1 < review_data/schema.sql",
-    "seed": "node review_data/start.js",
-    "populate": "review-module_database_1 < review_data/seed.sql",
-    "calculate": "node review_data/startAggregate.js",
-    "aggregate": "review-module_database_1 < review_data/aggregate.sql",
+    "create": "mysql -uroot < review-database/schema.sql",
+    "seed": "node review-database/start.js",
+    "populate": "mysql -uroot < review-database/seed.sql",
+    "calculate": "node review-database/startAggregate.js",
+    "aggregate": "mysql -uroot < review-database/zaggregate.sql",
     "build:dev": "webpack --config webpack.config.js -w",
-    "serve:dev": "nodemon review_server/start.js",
+    "serve:dev": "nodemon review-server/start.js",
     "dev": "npm run build:dev | npm run serve:dev",
     "build": "webpack --config webpack.config.js",
-    "serve": "node review_server/start.js",
+    "serve": "node review-server/start.js",
     "test": "jest --config=config.jest.js --coverage"
   },
   "repository": {

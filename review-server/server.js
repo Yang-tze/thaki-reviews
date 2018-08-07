@@ -7,7 +7,7 @@ import {
   updateReview,
   reportComment,
 } from './serverHelpers';
-import { db } from '../review_data/connection';
+import { db } from '../review-database/connection';
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -22,19 +22,11 @@ app.use(cors());
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-app.get('*/tether.min.js', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../node_modules/tether/dist/js/tether.min.js'));
+app.get('*/reviewBundle.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../public/reviewBundle.js'));
 });
 
-app.get('*/drop.min.js', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../node_modules/tether-drop/dist/js/drop.min.js'));
-});
-
-app.get('*/drop-theme-arrows.css', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../node_modules/tether-drop/dist/css/drop-theme-arrows.css'));
-});
-
-app.get('/reviewsummary/:productId', (req, res) => {
+app.get('*/reviews/summary/:productId', (req, res) => {
   const product = Number(req.params.productId);
   if (typeof product !== 'number') {
     res.sendStatus(400);
@@ -42,38 +34,38 @@ app.get('/reviewsummary/:productId', (req, res) => {
   getAggregate(product).then(summary => res.send(summary));
 });
 
-app.get('/reviews/:productId', (req, res) => {
+app.get('*/reviews/:productId', (req, res) => {
   const product = Number(req.params.productId);
   if (typeof product !== 'number') res.sendStatus(400);
   getReviews(product, getImages).then(results => res.send(results));
 });
 
-app.get('/comments/:reviewId', (req, res) => {
+app.get('*/reviews/comments/:reviewId', (req, res) => {
   // TODO: add comment viewing
   res.send();
 });
 
-app.post('/addreview', (req, res) => {
+app.post('*/reviews/addreview', (req, res) => {
   // TODO: add review posting
   res.send();
 });
 
-app.post('/addcomment', (req, res) => {
+app.post('*/reviews/addcomment', (req, res) => {
   // TODO: add comment posting
   res.send();
 });
 
-app.post('/reviewfeedback', (req, res) => {
+app.post('*/reviews/reviewfeedback', (req, res) => {
   // TODO: add review helpful/not_helpful incrementing
   res.send();
 });
 
-app.post('/reportcomment', (req, res) => {
+app.post('*/reviews/reportcomment', (req, res) => {
   // TODO: add abuse incrementing
   res.send();
 });
 
-app.use('/*', express.static('public'));
+app.use('*/*', express.static('public'));
 
 app.listen(port, () => {
   console.log('Listening on port:', port);
