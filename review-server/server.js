@@ -2,10 +2,9 @@ import {
   getAggregate,
   getReviews,
   getImages,
-  addReview,
-  addComment,
-  updateReview,
-  reportComment,
+  addUser,
+  deleteUser,
+  updateUser,
 } from './serverHelpers';
 import { db } from '../review-database/connection';
 
@@ -22,6 +21,36 @@ app.use(cors());
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+app.use(jsonParser);
+app.use(urlencodedParser);
+
+// CREATE
+app.post('*/reviews/adduser/', (req, res) => {
+  // i: integer, product
+  // o: side effect, adds review to reviews table
+  console.log(req.body);
+  const { username, img } = req.body;
+  addUser(username, img, (err) => {
+    if (err) {
+      return res.sendStatus(500).send(err);
+    }
+    res.send('added user');
+    return null;
+  });
+});
+
+// app.post('*/reviews/adduser', (req, res) => {
+//   const { username, img } = req.body;
+//   addUser(username, img, (err) => {
+//     if (err) {
+//       return res.status(500).send(err);
+//     }
+//     res.sendStatus(201);
+//     return null;
+//   });
+// });
+
+// READ
 app.get('*/reviewBundle.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/reviewBundle.js'));
 });
@@ -40,29 +69,22 @@ app.get('*/reviews/:productId', (req, res) => {
   getReviews(product, getImages).then(results => res.send(results));
 });
 
-app.get('*/reviews/comments/:reviewId', (req, res) => {
-  // TODO: add comment viewing
-  res.send();
+// UPDATE
+app.put('/reviews/updateuser', (req, res) => {
+  const { change, username, img } = req.body;
+  updateUser(change, username, img, (err) => {
+    if (err) return res.sendStatus(500).send(err);
+    res.send(`updated ${change} to ${username} and ${img}`);
+  });
 });
 
-app.post('*/reviews/addreview', (req, res) => {
-  // TODO: add review posting
-  res.send();
-});
-
-app.post('*/reviews/addcomment', (req, res) => {
-  // TODO: add comment posting
-  res.send();
-});
-
-app.post('*/reviews/reviewfeedback', (req, res) => {
-  // TODO: add review helpful/not_helpful incrementing
-  res.send();
-});
-
-app.post('*/reviews/reportcomment', (req, res) => {
-  // TODO: add abuse incrementing
-  res.send();
+// DELETE
+app.delete('/reviews/deleteuser', (req, res) => {
+  const { toDelete, id } = req.body;
+  deleteUser(toDelete, id, (err) => {
+    if (err) return res.send(err);
+    res.send(`deleted ${toDelete} with id: ${id}`);
+  });
 });
 
 app.use('*/*', express.static('public'));

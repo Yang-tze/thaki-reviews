@@ -2,6 +2,32 @@ import Promise from 'bluebird';
 
 import { db } from '../review-database/connection';
 
+// CREATE
+// const addUser = (username, img, callback) => new Promise((resolve) => {
+//   db.query(`INSERT INTO users(username, img) VALUES (${username}, ${img})`, (err, data) => {
+//     if (err) return 404;
+//     resolve(callback(data));
+//   });
+// });
+
+const addUser = (username, img, callback) => {
+  // add users record if new
+  // add reviews record (w/ foreign key user_id)
+  // add images record if applicable (w/ foreign key review_id)
+  // update/get aggregates
+  db.query('INSERT INTO users(username, img) VALUES(?, ?)', [username, img], callback);
+};
+//---
+const updateUser = (change, username, img, callback) => {
+  db.query(`UPDATE users SET username = '${username}', img = '${img}' WHERE username = '${change}'`, callback);
+};
+
+//---
+const deleteUser = (toDelete, id, callback) => {
+  db.query(`DELETE FROM users WHERE id = '${id}'`, callback);
+};
+
+//---
 const getAggregate = productId => new Promise((resolve) => {
   db.query(`SELECT * FROM aggregates WHERE product_id=${productId};`, (err, data) => {
     if (err) return 404;
@@ -70,6 +96,9 @@ export {
   getImages,
   getComments,
   addReview,
+  addUser,
+  updateUser,
+  deleteUser,
   addComment,
   updateReview,
   reportComment,
