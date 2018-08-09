@@ -52,3 +52,17 @@
     - Search customer reviews
       - Search Bar Search _button: link to Customer Reviews Search page_
     
+
+## CRUD API
+Add new user
+> POST */reviews/adduser
+
+Get reviews
+> GET */reviews/:productId
+
+Update user
+> PUT */reviews/updateuser
+
+Delete user
+> DELETE */reviews/deleteuser
+
