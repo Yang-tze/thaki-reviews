@@ -13,6 +13,7 @@ import {
 class Service extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       product: null,
       aggregates: {
@@ -21,24 +22,68 @@ class Service extends React.Component {
       },
       reviews: [],
       images: [],
-      // query: '',
     };
-    this.props.store.subscribe(() => {
-      this.setState({
-        product: this.props.store.getState().product,
-        aggregates: this.props.store.getState().aggregates,
-        reviews: this.props.store.getState().reviews.reviews,
-        images: this.props.store.getState().reviews.images,
-      });
-    });
   }
 
   componentDidMount() {
+    fetch('/reviews/all/8000000')
+      .then((response) => {
+        return response.json();
+      }).then((json) => {
+        this.getReviews(json);
+        this.getAggregates(json);
+        this.getProduct(json);
+        this.getImages();
+      }).catch((err) => {
+        if (err) console.log('an error occured:', err);
+      });
+
     if (this.props.match.params.productId !== this.state.product) {
       this.props.store.dispatch(selectProduct(this.props.match.params.productId));
       this.props.store.dispatch(fetchAggregates(this.props.match.params.productId));
       this.props.store.dispatch(fetchReviews(this.props.match.params.productId));
     }
+  }
+
+  getReviews(reviews) {
+    const reviewsArr = reviews.reduce((accum, current) => {
+      const { id, date, img, product_id, rating, review, title, user_id, username } = current;
+      accum.push({ id, date, img, product_id, rating, review, title, user_id, username });
+      return accum;
+    }, []);
+    this.setState({
+      reviews: reviewsArr,
+    });
+  }
+
+  getAggregates(summary) {
+    const { product_id, five, four, three, two, one, product_name } = summary[0];
+    const qty = one + two + three + four + five;
+    const score = Math.round(qty / (summary.length * 40)) / 2;
+
+    this.setState({
+      aggregates: { product_id, five, four, three, two, one, product_name, qty, score },
+    });
+  }
+
+  getProduct(summary) {
+    this.setState({
+      product: summary[0].product_id,
+    });
+  }
+
+  getImages() {
+    const images = [[
+      { url: 'images (15) copy.jpeg' },
+      { url: 'images (18) copy.jpeg' },
+      { url: 'images (16) copy.jpeg' },
+      { url: 'images (14) copy.jpeg' },
+      { url: 'images (17) copy.jpeg' },
+      { url: 'images (13) copy.jpeg' },
+    ]];
+    this.setState({
+      images: images,
+    });
   }
 
   render() {
@@ -56,6 +101,3 @@ class Service extends React.Component {
 }
 
 export default Service;
-
-/* TODO: add components for alt URLS <Route exact={true} path="/:productId?" component={CustomerReviews}/>
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"; */
