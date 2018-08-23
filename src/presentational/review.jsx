@@ -54,7 +54,7 @@ const Review = ({review}) => (
   <div className={styles.review}>
     <div className={styles.user}>
       <div className={styles.avatar}>
-        <img src={`https://s3-us-west-1.amazonaws.com/viamis-review-module-profile-pics/${urlify(review.img)}`} alt="profile"></img>
+        <img src={review.img} alt="profile" />
       </div>
       <span className={styles.username}>
         {review.username}
