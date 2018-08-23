@@ -82,7 +82,7 @@ class Service extends React.Component {
       { url: 'images (13) copy.jpeg' },
     ]];
     this.setState({
-      images: images,
+      images,
     });
   }
 
