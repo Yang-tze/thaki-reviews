@@ -3,11 +3,7 @@ const AWS = require('aws-sdk');
 const request = require('request');
 
 AWS.config.loadFromPath('./review-database/data-generation/config.json');
-// const s3 = new AWS.S3();
-
 const s3Bucket = new AWS.S3({ params: { Bucket: 'review-sdc/img' } });
-
-// const image = { Key: 'profile1', Body: faker.image.avatar() };
 
 const uploadImageToS3 = (url, imageName, callback) => {
   request({
@@ -35,5 +31,4 @@ const generateImageAndUploadToS3 = (numberOfImages) => {
 };
 
 generateImageAndUploadToS3(1000);
-
 module.exports = generateImageAndUploadToS3;

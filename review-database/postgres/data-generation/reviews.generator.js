@@ -9,15 +9,16 @@ const generateReviews = (n, start, amount) => {
   const write = fs.createWriteStream(`reviews${n}.data.csv`);
   for (let i = start; i <= start + amount; i += 1) {
     for (let j = 1; j <= getRandomIntInclusive(1, 5); j += 1) {
-      let result = `${id}
-      ${new Date().toDateString()}
-      ${getRandomIntInclusive(1, 10000000)}
-      ${i}
-      ${getRandomIntInclusive(1, 5)}
-      ${faker.lorem.sentence()}
-      ${faker.random.boolean()}
-      ${faker.lorem.sentence()}`.split('\n').join(',');
-      result += '\n';
+      const newId = id;
+      const date = new Date().toDateString();
+      const userId = getRandomIntInclusive(1, 10000000);
+      const productId = i;
+      const rating = getRandomIntInclusive(1, 5);
+      const title = faker.lorem.sentence();
+      const verified = faker.random.boolean();
+      const review = faker.lorem.sentence();
+
+      const result = `${newId}, ${date}, ${userId}, ${productId}, ${rating}, ${title}, ${verified}, ${review}\n`;
       id += 1;
       write.write(result);
     }
@@ -26,6 +27,8 @@ const generateReviews = (n, start, amount) => {
 };
 
 generateReviews(1, 1, 3000000);
-// generateReviews(2, 3000001, 3000000);
-// generateReviews(3, 6000001, 3000000);
-// generateReviews(4, 9000001, 1000000);
+generateReviews(2, 3000001, 3000000);
+generateReviews(3, 6000001, 3000000);
+generateReviews(4, 9000001, 1000000);
+
+module.exports = getRandomIntInclusive;
