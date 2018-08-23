@@ -1,3 +1,5 @@
+require('newrelic');
+
 require('babel-register')({
   presets: ['env'],
 });
