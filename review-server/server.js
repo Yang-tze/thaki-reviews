@@ -50,7 +50,7 @@ if (cluster.isMaster) {
   app.get('*/reviewBundle.js', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../public/reviewBundle.js'));
   });
-
+/*
   // Redis Caching ops
   const client = redis.createClient();
 
@@ -61,7 +61,7 @@ if (cluster.isMaster) {
   client.on('error', (error) => {
     console.log('Error on Redis client:', error);
   });
-
+*/
   const getAll = (req, res) => {
     const product = Number(req.params.productId);
     if (typeof product !== 'number') res.sendStatus(400);
@@ -82,7 +82,7 @@ if (cluster.isMaster) {
     });
   };
 
-  app.get('*/reviews/all/:productId', getAllCache);
+  app.get('*/reviews/all/:productId', getAll);
   //--
 
   // UPDATE
@@ -103,7 +103,7 @@ if (cluster.isMaster) {
     });
   });
 
-  app.use('*/*', express.static('public'));
+  app.use('*/*', express.static('public/'));
 
   app.listen(port, () => {
     console.log('Listening on port:', port);

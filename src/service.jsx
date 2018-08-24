@@ -26,10 +26,11 @@ class Service extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/reviews/all/8000000')
-      .then((response) => {
-        return response.json();
-      }).then((json) => {
+    const productId = this.props.match.params.productId;
+    fetch(`/reviews/all/${productId}`)
+      .then(response => response.json())
+      .then((json) => {
+        console.log(json);
         this.getReviews(json);
         this.getAggregates(json);
         this.getProduct(json);
